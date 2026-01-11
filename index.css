@@ -1,0 +1,241 @@
+body
+{
+   background-color: #FFFFFF;
+   color: #000000;
+   font-family: Arial;
+   font-weight: normal;
+   font-size: 16px;
+   line-height: 1.1875;
+   margin: 0;
+   padding: 0;
+}
+#wb_intro8FlexContainer
+{
+   background-image: linear-gradient(45deg, #FF6EC4 0%, #7873F5 100%);
+   border: 0px solid #000000;
+   border-radius: 0px;
+   box-sizing: border-box;
+   position: relative;
+   width: 100%;
+}
+#intro8FlexContainer
+{
+   display: flex;
+   position: relative;
+   min-height: 100vh;
+   padding: 100px 0 10px 0;
+   flex-direction: column;
+   flex-wrap: nowrap;
+   justify-content: space-around;
+   align-items: stretch;
+   align-content: flex-start;
+   margin-top: 0px;
+   margin-bottom: 0px;
+   margin-right: auto;
+   margin-left: auto;
+   max-width: 1140px;
+   box-sizing: border-box;
+   font-size: 0;
+}
+#wb_intro8Card
+{
+   position: relative;
+   display: flex;
+   flex-direction: column;
+   flex-grow: 0;
+   flex-shrink: 0;
+   align-self: auto;
+   box-sizing: border-box;
+   margin: 0;
+   background-color: transparent;
+   background-image: none;
+   border: 0px solid #DEDEDE;
+   border-radius: 0px;
+   text-align: center;
+}
+#intro8Card-card-body
+{
+   padding: 0;
+   flex: 1 1 auto;
+   font-size: 0;
+}
+#intro8Card-card-item0
+{
+   box-sizing: border-box;
+   margin: 0 30px 20px 30px;
+   padding: 0;
+   color: #FFFFFF;
+   font-family: Arial;
+   font-weight: bold;
+   font-style: normal;
+   font-size: 48px;
+}
+#intro8Card-card-item1
+{
+   box-sizing: border-box;
+   margin: 0 30px 30px 30px;
+   padding: 0;
+   color: #FFFFFF;
+   font-family: Arial;
+   font-weight: normal;
+   font-style: normal;
+   font-size: 19px;
+}
+#intro8Card-card-item2
+{
+   display: inline-block;
+   height: 39px;
+   cursor: pointer;
+   box-sizing: border-box;
+   margin: 0 0 30px 0 ;
+   padding: 12px 20px 12px 20px;
+   border: 1px solid #0D6EFD;
+   border-radius: 4px;
+   background-color: #0D6EFD;
+   background-image: none;
+   color: #FFFFFF;
+   font-family: Arial;
+   font-weight: normal;
+   font-style: normal;
+   font-size: 13px;
+}
+#wb_Shape1 a img
+{
+   position: absolute;
+   left: 0;
+}
+#wb_Shape1 .default
+{
+   position: absolute;
+   left: 0;
+}
+#wb_Shape1 a .hover
+{
+   visibility: hidden;
+}
+#wb_Shape1 a:hover .hover
+{
+   visibility: visible;
+}
+#wb_Shape1 a:hover .default
+{
+   visibility: hidden;
+}
+#Shape1
+{
+   border-width: 0;
+   vertical-align: top;
+}
+#wb_Shape1
+{
+   margin: 0;
+   flex-grow: 0;
+   flex-shrink: 0;
+   align-self: auto;
+   vertical-align: top;
+}
+#wb_Shape2 a img
+{
+   position: absolute;
+   left: 0;
+}
+#wb_Shape2 .default
+{
+   position: absolute;
+   left: 0;
+}
+#wb_Shape2 a .hover
+{
+   visibility: hidden;
+}
+#wb_Shape2 a:hover .hover
+{
+   visibility: visible;
+}
+#wb_Shape2 a:hover .default
+{
+   visibility: hidden;
+}
+#Shape2
+{
+   border-width: 0;
+   vertical-align: top;
+}
+#wb_Shape2
+{
+   margin: 0;
+   flex-grow: 0;
+   flex-shrink: 0;
+   align-self: auto;
+   vertical-align: top;
+}
+#wb_Shape3 a img
+{
+   position: absolute;
+   left: 0;
+}
+#wb_Shape3 .default
+{
+   position: absolute;
+   left: 0;
+}
+#wb_Shape3 a .hover
+{
+   visibility: hidden;
+}
+#wb_Shape3 a:hover .hover
+{
+   visibility: visible;
+}
+#wb_Shape3 a:hover .default
+{
+   visibility: hidden;
+}
+#Shape3
+{
+   border-width: 0;
+   vertical-align: top;
+}
+#wb_Shape3
+{
+   margin: 0;
+   flex-grow: 0;
+   flex-shrink: 0;
+   align-self: auto;
+   vertical-align: top;
+}
+#wb_Shape4 a img
+{
+   position: absolute;
+   left: 0;
+}
+#wb_Shape4 .default
+{
+   position: absolute;
+   left: 0;
+}
+#wb_Shape4 a .hover
+{
+   visibility: hidden;
+}
+#wb_Shape4 a:hover .hover
+{
+   visibility: visible;
+}
+#wb_Shape4 a:hover .default
+{
+   visibility: hidden;
+}
+#Shape4
+{
+   border-width: 0;
+   vertical-align: top;
+}
+#wb_Shape4
+{
+   margin: 0;
+   flex-grow: 0;
+   flex-shrink: 0;
+   align-self: auto;
+   vertical-align: top;
+}

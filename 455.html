@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 6: Pressure, Winds, Storms & Cyclones | Master Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0b0f19;
+            --panel-bg: #151b2b;
+            --primary: #00f2ff; /* Cyan */
+            --secondary: #7000ff; /* Purple */
+            --accent: #ff0055; /* Pink/Red */
+            --text-main: #e0e6ed;
+            --text-muted: #94a3b8;
+            --success: #00ff9d;
+            --border-radius: 12px;
+        }
+
+        * { box-sizing: border-box; transition: all 0.2s ease-in-out; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container { max-width: 950px; margin: 0 auto; }
+
+        /* --- HEADER --- */
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(180deg, rgba(21, 27, 43, 0) 0%, rgba(21, 27, 43, 0.8) 100%);
+            border-bottom: 2px solid var(--primary);
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, var(--secondary), var(--primary), var(--secondary));
+            animation: scanline 3s linear infinite;
+        }
+
+        @keyframes scanline { 0% { background-position: 0% 0%; } 100% { background-position: 100% 0%; } }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
+        }
+
+        .subtitle { color: var(--primary); font-size: 1.2rem; margin-top: 10px; font-weight: 300; }
+
+        /* --- ACCORDION TOPICS --- */
+        .topic-group { margin-bottom: 25px; }
+
+        .topic-btn {
+            width: 100%;
+            background: var(--panel-bg);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            padding: 20px 25px;
+            font-size: 1.2rem;
+            text-align: left;
+            cursor: pointer;
+            border-radius: var(--border-radius);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topic-btn:hover { border-color: var(--primary); box-shadow: 0 0 15px rgba(0, 242, 255, 0.1); }
+        .topic-btn.active { 
+            background: linear-gradient(90deg, rgba(0, 242, 255, 0.1), transparent);
+            border-color: var(--primary);
+        }
+        
+        .topic-btn .arrow { font-size: 1.5rem; color: var(--primary); }
+        .topic-btn.active .arrow { transform: rotate(180deg); }
+
+        .topic-content {
+            max-height: 0;
+            overflow: hidden;
+            background: rgba(21, 27, 43, 0.5);
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            padding: 0 25px;
+            opacity: 0;
+            border: 1px solid transparent;
+        }
+
+        .topic-content.open {
+            max-height: 8000px; /* Allow large expansion */
+            padding: 30px 25px;
+            opacity: 1;
+            border-color: rgba(255,255,255,0.05);
+            margin-top: -10px;
+        }
+
+        /* --- TYPOGRAPHY & BOXES --- */
+        h3 { 
+            color: var(--primary); 
+            font-family: 'Orbitron', sans-serif; 
+            border-left: 4px solid var(--secondary);
+            padding-left: 15px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        .definition-box {
+            background: rgba(0, 242, 255, 0.05);
+            border: 1px solid var(--primary);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        ul { padding-left: 20px; color: var(--text-muted); }
+        li { margin-bottom: 10px; }
+        strong { color: white; }
+
+        /* --- SIMULATIONS --- */
+        .sim-container {
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin: 30px 0;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
+        }
+        
+        .sim-title { color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; margin-bottom: 20px; }
+
+        /* Sim 1: Pressure Piston */
+        .piston-stage { height: 120px; display: flex; align-items: flex-end; justify-content: center; gap: 5px; position: relative; }
+        .weight-block { width: 80px; background: var(--accent); border-radius: 4px; margin: 0 auto; transition: height 0.3s; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .contact-area { height: 10px; background: white; margin: 0 auto; transition: width 0.3s; }
+        .ground { height: 5px; width: 200px; background: #333; margin: 5px auto 0; }
+        
+        /* Sim 2: Liquid Jets */
+        .tank-visual { width: 120px; height: 180px; border: 2px solid #555; border-top: none; margin: 0 auto; position: relative; background: rgba(255,255,255,0.05); }
+        .water-fill { position: absolute; bottom: 0; width: 100%; background: rgba(0, 242, 255, 0.5); transition: height 0.2s; }
+        .jet { position: absolute; left: 100%; height: 3px; background: var(--primary); width: 0; transition: width 0.3s ease-out; border-radius: 0 50% 50% 0; }
+        .j1 { bottom: 20px; } .j2 { bottom: 70px; } .j3 { bottom: 120px; }
+
+        /* Sim 3: Bernoulli */
+        .balloon-stage { height: 150px; display: flex; justify-content: center; gap: 60px; position: relative; }
+        .sim-balloon { width: 50px; height: 65px; background: var(--accent); border-radius: 50%; position: relative; transition: transform 0.5s ease; }
+        .sim-balloon::before { content: ''; position: absolute; bottom: 100%; left: 50%; width: 1px; height: 50px; background: #555; }
+        .wind-flow { position: absolute; top: 30%; left: 50%; transform: translateX(-50%); width: 0; height: 60px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); transition: width 0.2s; }
+
+        .controls { display: flex; gap: 15px; justify-content: center; margin-top: 15px; flex-wrap: wrap; }
+        input[type=range] { accent-color: var(--primary); cursor: pointer; }
+        button.action-btn {
+            background: var(--secondary); color: white; border: none; padding: 8px 20px; border-radius: 20px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 0.8rem;
+        }
+        button.action-btn:hover { background: var(--primary); color: black; box-shadow: 0 0 15px var(--primary); }
+
+        /* --- QUESTIONS --- */
+        .qa-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 15px;
+            border-radius: 8px;
+        }
+        
+        .question-text {
+            padding: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .question-text:hover { background: rgba(255,255,255,0.05); }
+        .question-text::before { content: 'Q'; color: var(--primary); font-weight: bold; }
+
+        .answer-panel {
+            display: none;
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-muted);
+            background: rgba(0,0,0,0.2);
+        }
+        
+        .calc-box {
+            font-family: 'Courier New', monospace;
+            background: #000;
+            color: var(--success);
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #333;
+            margin-top: 10px;
+            white-space: pre-wrap;
+        }
+
+        /* MCQ */
+        .mcq-options { padding: 15px; }
+        .mcq-btn {
+            display: block; width: 100%; text-align: left; padding: 12px; margin: 8px 0;
+            background: #1e2536; border: 1px solid #333; color: #ccc; border-radius: 6px; cursor: pointer;
+        }
+        .mcq-btn:hover { border-color: var(--primary); }
+        .mcq-btn.correct { background: rgba(0, 255, 157, 0.2); border-color: var(--success); color: var(--success); }
+        .mcq-btn.wrong { background: rgba(255, 0, 85, 0.2); border-color: var(--accent); color: var(--accent); }
+        .reason { display: none; margin-top: 10px; font-size: 0.9rem; font-style: italic; color: var(--primary); }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Study Module: Chapter 6</h1>
+        <p class="subtitle">Pressure • Winds • Storms • Cyclones</p>
+		<p class="subtitle">WISDOM ACADEMY , M: 9577556400</p>
+    </header>
+
+    <!-- ============================================== -->
+    <!-- TOPIC 1: PRESSURE (SOLIDS) -->
+    <!-- ============================================== -->
+    <div class="topic-group">
+        <button class="topic-btn" onclick="toggleTopic(this)">
+            <span>1.0 Pressure in Solids & Concepts</span>
+            <span class="arrow">▼</span>
+        </button>
+        <div class="topic-content">
+            <div class="definition-box">
+                <strong>Concept:</strong> Pressure is the force acting per unit area.<br>
+                <strong>Formula:</strong> Pressure = Force/Area<br>
+                <strong>Units:</strong> Pascal (Pa) or N/m². (1 mb = 1 hPa = 100 Pa).<br>
+                <strong>Rule:</strong> For the same force, smaller area = higher pressure.
+            </div>
+
+            <p><strong>Real Life Applications:</strong></p>
+            <ul>
+                <li><strong>School Bags:</strong> Broad straps increase area to reduce pressure on shoulders.</li>
+                <li><strong>Knives:</strong> Sharp edges reduce area to increase pressure for cutting.</li>
+                <li><strong>Porters:</strong> Use a round cloth (pagri) to increase area on the head, reducing pressure.</li>
+            </ul>
+
+            <!-- SIMULATION 1 -->
+            <div class="sim-container">
+                <div class="sim-title">Simulation: Force vs Area</div>
+                <div class="piston-stage">
+                    <div id="weightVisual" class="weight-block" style="height: 50px;">Force</div>
+                </div>
+                <div id="areaVisual" class="contact-area" style="width: 100px;"></div>
+                <div class="ground"></div>
+                <div id="pressureReadout" style="margin-top:15px; color:var(--primary); font-size:1.2rem;">Pressure: 1000 Pa</div>
+                
+                <div class="controls">
+                    <label>Force: <input type="range" min="100" max="500" value="100" oninput="updateSolidSim(this.value, null)"></label>
+                    <label>Area: <input type="range" min="10" max="100" value="100" oninput="updateSolidSim(null, this.value)"></label>
+                </div>
+            </div>
+
+            <h3>Review Questions & Exercises</h3>
+
+            <!-- Review Q1 -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Q1: What is pressure, and how is it defined?</div>
+                <div class="answer-panel">Pressure is the force per unit area. It is defined as: Pressure = Force / Area. The SI unit is newton per square meter (N/m²), also called a pascal (Pa).</div>
+            </div>
+
+            <!-- Review Q2 -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Q2: Why do broad straps on a bag feel more comfortable than narrow straps?</div>
+                <div class="answer-panel">Broad straps distribute the weight (force) of the bag over a larger area, reducing the pressure on the shoulders. Narrow straps concentrate the force on a smaller area, increasing pressure and discomfort.</div>
+            </div>
+
+            <!-- Review Q3 -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Q3: Why is it easier to lift a water-filled bucket with a broad handle than a narrow one?</div>
+                <div class="answer-panel">A broad handle spreads the weight of the bucket over a larger area of the hand, reducing the pressure, making it more comfortable to lift.</div>
+            </div>
+
+            <!-- Review Q4 -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Q4: Why do people place a round piece of cloth under heavy loads on their heads?</div>
+                <div class="answer-panel">The cloth increases the area over which the load’s weight is distributed, reducing the pressure on the head and making it easier to carry.</div>
+            </div>
+
+            <!-- Exercise Q3 (Sinking Boy) -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Exercise Q3: Fig 6.23 shows a boy lying horizontally (a) and standing vertically (b) on loose sand. In which case does he sink more?</div>
+                <div class="answer-panel">
+                    <strong>Answer:</strong> He sinks more when standing vertically (b).<br>
+                    <strong>Reason:</strong> Pressure = Force/Area. When standing, his weight (Force) acts on the small area of his feet, creating high pressure. When lying, the area is larger, creating low pressure.
+                </div>
+            </div>
+
+            <!-- Exercise Q4 (Elephant Calc) -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Exercise Q4: Elephant Calculation (Weight 20,000 N, 4 feet, 0.25 m² each)</div>
+                <div class="answer-panel">
+                    <div class="calc-box">
+Given:
+  Weight (Force) = 20,000 N
+  Area of 1 foot = 0.25 m²
+  Total feet = 4
+
+Step 1: Calculate Total Area
+  Total Area = 4 × 0.25 m² = 1.0 m²
+
+Step 2: Calculate Pressure
+  Pressure = Force / Area
+  P = 20,000 N / 1.0 m²
+  P = 20,000 Pa
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- TOPIC 2: PRESSURE IN LIQUIDS -->
+    <!-- ============================================== -->
+    <div class="topic-group">
+        <button class="topic-btn" onclick="toggleTopic(this)">
+            <span>1.3 Pressure in Liquids</span>
+            <span class="arrow">▼</span>
+        </button>
+        <div class="topic-content">
+            <div class="definition-box">
+                <strong>Concept:</strong> Liquids exert pressure in all directions (walls and bottom).<br>
+                <strong>Key Rule:</strong> Pressure depends on the <strong>Depth (Height)</strong> of the liquid column, not the shape of the container.
+            </div>
+
+            <!-- SIMULATION 2 -->
+            <div class="sim-container">
+                <div class="sim-title">Simulation: Depth vs Pressure</div>
+                <div class="tank-visual">
+                    <div id="simWater" class="water-fill" style="height: 30%;"></div>
+                    <div id="jet1" class="jet j1"></div>
+                    <div id="jet2" class="jet j2"></div>
+                    <div id="jet3" class="jet j3"></div>
+                </div>
+                <div class="controls">
+                    <label>Water Level: <input type="range" min="0" max="100" value="30" oninput="updateLiquidSim(this.value)"></label>
+                </div>
+                <p style="font-size:0.8rem; margin-top:10px; color:#aaa;">Note: Bottom jet shoots furthest due to highest pressure.</p>
+            </div>
+
+            <h3>Review Questions & Exercises</h3>
+
+            <!-- Review Q5 -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Q5: Why are water tanks placed at a height?</div>
+                <div class="answer-panel">To increase the vertical height of the water column. This increases the pressure at the bottom, resulting in a stronger stream of water from taps on lower floors.</div>
+            </div>
+
+            <!-- Review Q6 -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Q6: Do liquids exert pressure, and in which directions?</div>
+                <div class="answer-panel">Yes, liquids exert pressure in all directions—on the bottom and sides of the container.</div>
+            </div>
+
+            <!-- Review Q7 -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Q7: Why does water spurt out from holes in a leaking pipe?</div>
+                <div class="answer-panel">Because the water inside exerts pressure on the pipe's walls, pushing it out forcefully through any openings.</div>
+            </div>
+
+            <!-- Review Q8 -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Q8: Why is the base of a dam broader than the top?</div>
+                <div class="answer-panel">To withstand the immense horizontal water pressure near the bottom, which increases with depth. A broader base provides structural stability.</div>
+            </div>
+
+            <!-- Exercise Q7 (Balloons) -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Exercise Q7: Two identical balloons on a bottle at the same height (Fig 6.24). Will they bulge equally?</div>
+                <div class="answer-panel">Yes, they will bulge equally. Since the outlets are at the same depth, the water exerts the same pressure on both balloons.</div>
+            </div>
+
+            <!-- Exercise Q5 (Boats) -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Exercise Q5: Calculation - Compare Pressure on Boat A vs Boat B</div>
+                <div class="answer-panel">
+                    <div class="calc-box">
+Boat A (5 people, 7m²):
+  Force = 5 × 700N = 3500 N
+  Pressure A = 3500 / 7 = 500 N/m²
+
+Boat B (3 people, 3.5m²):
+  Force = 3 × 700N = 2100 N
+  Pressure B = 2100 / 3.5 = 600 N/m²
+
+Result: Boat B experiences more pressure (by 100 N/m²).
+                    </div>
+                </div>
+            </div>
+
+            <!-- MCQ 1(i) -->
+            <div class="qa-card">
+                <div class="question-text" style="cursor:default">MCQ 1(i): Vessel R is filled. When pouring stops, water level in connected vessels P, Q, R (different shapes) will be:</div>
+                <div class="mcq-options">
+                    <button class="mcq-btn" onclick="checkMCQ(this, false)">Highest in P</button>
+                    <button class="mcq-btn" onclick="checkMCQ(this, false)">Highest in Q</button>
+                    <button class="mcq-btn" onclick="checkMCQ(this, false)">Highest in R</button>
+                    <button class="mcq-btn" onclick="checkMCQ(this, true)">Equal in all three</button>
+                    <div class="reason">Correct! Liquids seek their own level in communicating vessels regardless of shape.</div>
+                </div>
+            </div>
+
+            <!-- MCQ 1(iii) -->
+            <div class="qa-card">
+                <div class="question-text" style="cursor:default">MCQ 1(iii): To get more pressure from a roof tank, one has to:</div>
+                <div class="mcq-options">
+                    <button class="mcq-btn" onclick="checkMCQ(this, true)">Increase height 'H'</button>
+                    <button class="mcq-btn" onclick="checkMCQ(this, false)">Decrease height 'H'</button>
+                    <button class="mcq-btn" onclick="checkMCQ(this, false)">Replace with larger tank</button>
+                    <div class="reason">Correct! Pressure depends on vertical height.</div>
+                </div>
+            </div>
+
+            <!-- MCQ 1(iv) -->
+            <div class="qa-card">
+                <div class="question-text" style="cursor:default">MCQ 1(iv): Vessels A and B have same water level. B is wider. Compare Pressure (P) and Force (F).</div>
+                <div class="mcq-options">
+                    <button class="mcq-btn" onclick="checkMCQ(this, false)">PA = PB, FA = FB</button>
+                    <button class="mcq-btn" onclick="checkMCQ(this, true)">PA = PB, FA < FB</button>
+                    <button class="mcq-btn" onclick="checkMCQ(this, false)">PA < PB, FA = FB</button>
+                    <div class="reason">Correct! Pressure is equal (same depth). Force = Pressure × Area. B has larger area, so Force is higher.</div>
+                </div>
+            </div>
+
+            <!-- T/F ii -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">True/False: Liquids exert pressure only at the bottom of a container.</div>
+                <div class="answer-panel"><strong>False.</strong> Liquids exert pressure in all directions (bottom and sides).</div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- TOPIC 3: ATMOSPHERIC PRESSURE & WIND -->
+    <!-- ============================================== -->
+    <div class="topic-group">
+        <button class="topic-btn" onclick="toggleTopic(this)">
+            <span>2.0 Air Pressure & Wind Dynamics</span>
+            <span class="arrow">▼</span>
+        </button>
+        <div class="topic-content">
+            <div class="definition-box">
+                <strong>Atmospheric Pressure:</strong> The weight of the air column. (15x15cm column = 225kg).<br>
+                <strong>Wind:</strong> Moving air. Flows from <strong>High Pressure</strong> to <strong>Low Pressure</strong>.<br>
+                <strong>High Speed Winds:</strong> Cause <strong>Reduced Air Pressure</strong> (Bernoulli's Principle).
+            </div>
+
+            <!-- SIMULATION 3 -->
+            <div class="sim-container">
+                <div class="sim-title">Simulation: Bernoulli Effect</div>
+                <div class="balloon-stage">
+                    <div id="b1" class="sim-balloon"></div>
+                    <div id="windStream" class="wind-flow"></div>
+                    <div id="b2" class="sim-balloon"></div>
+                </div>
+                <div class="controls">
+                    <button class="action-btn" onclick="blowWind()">Blow High Speed Wind Between</button>
+                </div>
+                <p id="windFeedback" style="font-size:0.9rem; margin-top:10px; min-height:20px; color:var(--primary);"></p>
+            </div>
+
+            <h3>Review Questions & Exercises</h3>
+
+            <!-- Review Q9 -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Q9: Does air exert pressure? How is it demonstrated?</div>
+                <div class="answer-panel">Yes. Examples: Rubber sucker sticking to a wall (external pressure holds it), balloon inflating.</div>
+            </div>
+
+            <!-- Review Q10 -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Q10: Why are we not crushed by atmospheric pressure?</div>
+                <div class="answer-panel">The internal pressure of our bodies (fluids/gases) balances the external atmospheric pressure perfectly.</div>
+            </div>
+
+            <!-- Review Q11 -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Q11: How do winds form?</div>
+                <div class="answer-panel">Winds form due to uneven heating of Earth. Warm air rises (Low Pressure), and cool air rushes in (High Pressure) to fill the space.</div>
+            </div>
+
+            <!-- Exercise Q9 (Trees) -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Exercise Q9: Trees bending near coast on Summer Afternoon (Fig 6.25). Identify Land vs Sea.</div>
+                <div class="answer-panel">
+                    <strong>Side A is Land.</strong><br>
+                    Reason: Summer afternoon = Land heats faster (Low P). Sea is cooler (High P). Wind blows High to Low (Sea to Land). Trees bend towards Land.
+                </div>
+            </div>
+
+            <!-- Exercise Q10 (Activity) -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Exercise Q10: Activity to show air flows High P to Low P.</div>
+                <div class="answer-panel">Connect an inflated balloon (High P) to an uninflated one (Low P) using a straw. Air will flow from the inflated one to the uninflated one until pressures equalize.</div>
+            </div>
+
+            <!-- Review Q12 -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Q12: Why do high-speed winds result in lower air pressure?</div>
+                <div class="answer-panel">Fast-moving air reduces the density of air molecules in that region, lowering the pressure.</div>
+            </div>
+
+            <!-- Review Q13 -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Q13: Why are roofs blown off during storms?</div>
+                <div class="answer-panel">High wind over the roof creates Low Pressure. High pressure inside the house creates an upward lifting force that blows the roof off.</div>
+            </div>
+
+            <!-- Review Q14 -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Q14: Why keep doors/windows open in storms?</div>
+                <div class="answer-panel">To equalize pressure inside and outside, preventing the roof-lifting force.</div>
+            </div>
+
+            <!-- Review Q15 / Ex Q13 -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Q15 / Ex Q13: Why are holes made in banners?</div>
+                <div class="answer-panel">To allow wind to pass through. This reduces the pressure difference between the front and back, preventing the banner from tearing.</div>
+            </div>
+
+            <!-- MCQ 1(ii) -->
+            <div class="qa-card">
+                <div class="question-text" style="cursor:default">MCQ 1(ii): Rubber sucker M on smooth surface, N on rough surface.</div>
+                <div class="mcq-options">
+                    <button class="mcq-btn" onclick="checkMCQ(this, false)">Both stick</button>
+                    <button class="mcq-btn" onclick="checkMCQ(this, false)">Neither sticks</button>
+                    <button class="mcq-btn" onclick="checkMCQ(this, true)">M sticks, N does not</button>
+                    <div class="reason">Correct! Rough surfaces leak air, breaking the vacuum seal.</div>
+                </div>
+            </div>
+
+            <!-- T/F i -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">True/False: Air flows from a region of higher pressure to a region of lower pressure.</div>
+                <div class="answer-panel"><strong>True.</strong></div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- TOPIC 4: STORMS & CYCLONES -->
+    <!-- ============================================== -->
+    <div class="topic-group">
+        <button class="topic-btn" onclick="toggleTopic(this)">
+            <span>3.0 Severe Weather (Storms, Lightning, Cyclones)</span>
+            <span class="arrow">▼</span>
+        </button>
+        <div class="topic-content">
+            <div class="definition-box">
+                <strong>Thunderstorm:</strong> Rising warm air + falling cool air = Friction = Static Charge.<br>
+                <strong>Lightning:</strong> Massive discharge when charge buildup breaks air insulation.<br>
+                <strong>Cyclone:</strong> Huge rotating storm fueled by heat from condensing moisture over warm oceans.
+            </div>
+
+            <h3>Review Questions & Exercises</h3>
+
+            <!-- Review Q15 -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Q15: What is a storm?</div>
+                <div class="answer-panel">Strong winds accompanied by rain, hail, or snow. Forms when warm moist air rises and cool air rushes in.</div>
+            </div>
+
+            <!-- Review Q16 / Ex Q11 -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Q16 / Ex Q11: What is a thunderstorm? How does it form?</div>
+                <div class="answer-panel">A storm with lightning/thunder. Forms in hot/humid areas. Strong updrafts/downdrafts cause water/ice friction, creating electric charges.</div>
+            </div>
+
+            <!-- Review Q17 / Ex Q12 -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Q17 / Ex Q12: How does lightning occur?</div>
+                <div class="answer-panel">When charge buildup (Positive top, Negative bottom of cloud) becomes large enough to overcome air's insulation, a massive spark (discharge) occurs.</div>
+            </div>
+
+            <!-- Exercise Q6 -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Exercise Q6: Would lightning occur if air was a good conductor?</div>
+                <div class="answer-panel"><strong>No.</strong> Lightning requires charge buildup. If air were a conductor, charges would flow continuously and never accumulate enough to cause a massive discharge.</div>
+            </div>
+
+            <!-- Review Q18 -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Q18: What is a lightning conductor?</div>
+                <div class="answer-panel">A metal rod on buildings connected to the ground. It provides a safe path for electric charges to reach the earth without damaging the building.</div>
+            </div>
+
+            <!-- Review Q19 / Ex Q8 -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Q19 / Ex Q8: How does a storm become a cyclone?</div>
+                <div class="answer-panel">1. Warm ocean air rises (Low P).<br>2. Vapor condenses releasing heat.<br>3. Air rises faster, pressure drops more.<br>4. Surrounding air rushes in and spins (Coriolis).</div>
+            </div>
+
+            <!-- Review Q20 -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Q20: What is the Eye of a cyclone?</div>
+                <div class="answer-panel">The calm, low-pressure center with clear skies.</div>
+            </div>
+
+            <!-- Review Q21 -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Q21: Why do cyclones weaken over land?</div>
+                <div class="answer-panel">Because their energy source (warm moisture from the ocean) is cut off.</div>
+            </div>
+
+            <!-- Review Q22 -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">Q22: Safety precautions during lightning?</div>
+                <div class="answer-panel">Stay away from tall trees, crouch low (don't lie flat), avoid water, stay inside a car (Faraday cage).</div>
+            </div>
+
+            <!-- T/F iii, iv -->
+            <div class="qa-card">
+                <div class="question-text" onclick="toggleAns(this)">True/False Check</div>
+                <div class="answer-panel">
+                    (iii) Weather is stormy at the eye of a cyclone. [<strong>False</strong> - Eye is calm]<br>
+                    (iv) During a thunderstorm, it is safer to be in a car. [<strong>True</strong>]
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // --- ACCORDION LOGIC ---
+    function toggleTopic(btn) {
+        // Close others
+        /* Optional: Uncomment to allow only one open at a time
+        document.querySelectorAll('.topic-btn').forEach(b => {
+            if(b !== btn && b.classList.contains('active')) {
+                b.classList.remove('active');
+                b.nextElementSibling.classList.remove('open');
+            }
+        });
+        */
+        
+        btn.classList.toggle('active');
+        const content = btn.nextElementSibling;
+        content.classList.toggle('open');
+    }
+
+    // --- QUESTION TOGGLE ---
+    function toggleAns(header) {
+        const answer = header.nextElementSibling;
+        if(answer.style.display === 'block') {
+            answer.style.display = 'none';
+        } else {
+            answer.style.display = 'block';
+        }
+    }
+
+    // --- MCQ LOGIC ---
+    function checkMCQ(btn, isCorrect) {
+        const parent = btn.parentElement;
+        const reason = parent.querySelector('.reason');
+        const btns = parent.querySelectorAll('.mcq-btn');
+        
+        // Disable all buttons in this set
+        btns.forEach(b => {
+            b.disabled = true;
+            if(b === btn) {
+                if(isCorrect) b.classList.add('correct');
+                else b.classList.add('wrong');
+            }
+        });
+
+        if(!isCorrect) {
+            // Highlight the correct answer automatically
+            // In a real app we'd tag the correct one, here we assume user retries or sees feedback
+        }
+        
+        reason.style.display = 'block';
+        if(isCorrect) {
+            reason.innerHTML = "<strong>Correct!</strong> " + reason.innerHTML;
+            reason.style.color = "var(--success)";
+        } else {
+            reason.innerHTML = "<strong>Incorrect.</strong> " + reason.innerHTML;
+            reason.style.color = "var(--accent)";
+        }
+    }
+
+    // --- SIMULATION 1: FORCE/AREA ---
+    function updateSolidSim(fVal, aVal) {
+        const fInput = document.querySelector('input[type=range][oninput*="updateSolidSim(this.value"]');
+        const aInput = document.querySelector('input[type=range][oninput*="updateSolidSim(null"]');
+        
+        // Get current values if not passed
+        let F = fVal ? parseInt(fVal) : parseInt(fInput.value);
+        let A = aVal ? parseInt(aVal) : parseInt(aInput.value);
+
+        // Update Visuals
+        const weightBlock = document.getElementById('weightVisual');
+        const areaBlock = document.getElementById('areaVisual');
+        const readout = document.getElementById('pressureReadout');
+
+        // Force visual: Height of block
+        weightBlock.style.height = (30 + F * 0.1) + 'px';
+        weightBlock.innerText = F + "N";
+
+        // Area visual: Width of contact
+        areaBlock.style.width = (A * 2) + 'px';
+
+        // Calculation
+        let P = (F / (A/10)).toFixed(0); // Arbitrary scaling for display
+        readout.innerText = `Pressure: ${P} Pa`;
+    }
+
+    // --- SIMULATION 2: LIQUID JETS ---
+    function updateLiquidSim(val) {
+        const water = document.getElementById('simWater');
+        const j1 = document.getElementById('jet1');
+        const j2 = document.getElementById('jet2');
+        const j3 = document.getElementById('jet3');
+
+        water.style.height = val + '%';
+
+        // Logic: Jet width depends on (WaterHeight - JetHeight).
+        // Tank total height ~180px. 
+        // Jet positions: 20, 70, 120.
+        
+        let waterH = val * 1.8; // Convert % to approx px
+
+        function setJet(jet, heightPos) {
+            let pressureHead = waterH - heightPos;
+            if(pressureHead > 0) {
+                jet.style.width = (pressureHead * 0.8) + 'px'; // scaling factor
+            } else {
+                jet.style.width = '0px';
+            }
+        }
+
+        setJet(j1, 20);
+        setJet(j2, 70);
+        setJet(j3, 120);
+    }
+
+    // --- SIMULATION 3: BERNOULLI ---
+    function blowWind() {
+        const b1 = document.getElementById('b1');
+        const b2 = document.getElementById('b2');
+        const wind = document.getElementById('windStream');
+        const feedback = document.getElementById('windFeedback');
+
+        // Animate Wind
+        wind.style.width = '80px';
+        wind.style.opacity = '1';
+        feedback.innerText = "Wind creates Low Pressure... Balloons move IN!";
+
+        // Animate Balloons
+        b1.style.transform = "translateX(25px) rotate(10deg)";
+        b2.style.transform = "translateX(-25px) rotate(-10deg)";
+
+        // Reset
+        setTimeout(() => {
+            wind.style.width = '0';
+            wind.style.opacity = '0';
+            b1.style.transform = "translateX(0)";
+            b2.style.transform = "translateX(0)";
+            feedback.innerText = "";
+        }, 2500);
+    }
+
+    // Initialize Sim 1
+    updateSolidSim(100, 100);
+
+</script>
+
+</body>
+</html>

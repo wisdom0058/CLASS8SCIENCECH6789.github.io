@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Particulate Nature of Matter: The Complete Source Guide</title>
+    <style>
+        :root {
+            --brand: #4f46e5;       /* Indigo-600 */
+            --brand-light: #818cf8;
+            --accent: #f59e0b;      /* Amber-500 */
+            --success: #10b981;     /* Emerald-500 */
+            --bg-body: #f8fafc;
+            --text-main: #1e293b;
+            --text-light: #64748b;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+        }
+
+        /* HEADER */
+        header {
+            background: linear-gradient(135deg, var(--brand), #312e81);
+            color: white;
+            padding: 4rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        header h1 { margin: 0; font-size: 3rem; font-weight: 800; letter-spacing: -0.025em; }
+        header p { font-size: 1.2rem; opacity: 0.9; margin-top: 15px; max-width: 800px; margin-inline: auto; }
+
+        .container {
+            max-width: 1000px;
+            margin: -40px auto 60px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* ACCORDION SECTIONS */
+        .topic-wrapper {
+            background: var(--card-bg);
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+        .topic-wrapper:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+
+        .topic-header {
+            padding: 25px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            border-left: 6px solid var(--brand);
+            user-select: none;
+        }
+        .topic-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .icon-box {
+            background: #e0e7ff; color: var(--brand);
+            width: 40px; height: 40px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 1.2rem;
+        }
+        .toggle-icon { font-size: 1.5rem; color: var(--text-light); transition: transform 0.3s ease; }
+
+        .topic-content {
+            display: none;
+            padding: 30px 40px;
+            border-top: 1px solid #f1f5f9;
+            animation: fadeIn 0.4s ease;
+        }
+        .topic-wrapper.active .topic-content { display: block; }
+        .topic-wrapper.active .toggle-icon { transform: rotate(180deg); color: var(--brand); }
+        .topic-wrapper.active { border-color: var(--brand-light); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* CONTENT STYLES */
+        h3 { color: #312e81; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; margin-top: 30px; font-size: 1.3rem; }
+        
+        .def-card {
+            background: #f0fdf4;
+            border-left: 5px solid var(--success);
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+        .def-label { color: #15803d; font-weight: 800; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em; display: block; margin-bottom: 5px; }
+
+        .heritage-box {
+            background: #fffbeb; border: 1px solid #fcd34d;
+            padding: 20px; border-radius: 12px; margin: 25px 0; position: relative;
+        }
+        .heritage-badge {
+            position: absolute; top: -12px; left: 20px;
+            background: #f59e0b; color: white; padding: 4px 12px;
+            border-radius: 20px; font-size: 0.75rem; font-weight: bold;
+        }
+
+        .activity-box {
+            background: #f1f5f9; border-left: 5px solid #64748b;
+            padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0;
+        }
+        .activity-title { font-weight: 700; color: #334155; display: block; margin-bottom: 8px; }
+
+        .extra-concept {
+            background: #f3e8ff; border: 1px dashed #a855f7;
+            padding: 15px; border-radius: 8px; font-size: 0.95rem; margin-top: 20px;
+        }
+
+        /* TABLES */
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        th { background: var(--brand); color: white; padding: 12px 15px; text-align: left; }
+        td { padding: 12px 15px; border-bottom: 1px solid #e2e8f0; }
+        tr:last-child td { border-bottom: none; }
+
+        /* SIMULATIONS */
+        .sim-wrapper {
+            background: #0f172a; padding: 20px; border-radius: 16px;
+            text-align: center; color: white; margin: 30px 0;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        canvas {
+            background: #1e293b; border-radius: 8px; width: 100%; max-width: 650px;
+            cursor: pointer; box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+        }
+        .controls { margin-top: 15px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .btn-sim {
+            background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 24px; border-radius: 30px; cursor: pointer; font-weight: 600; transition: all 0.2s;
+        }
+        .btn-sim:hover, .btn-sim.active { background: var(--accent); border-color: var(--accent); color: #0f172a; }
+
+        /* Q&A STYLES */
+        .qa-list { display: grid; gap: 12px; margin-top: 20px; }
+        .qa-item { border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; }
+        .qa-q {
+            background: #f8fafc; padding: 16px 20px; cursor: pointer; font-weight: 600;
+            display: flex; justify-content: space-between; align-items: center; color: var(--text-main);
+            transition: background 0.2s;
+        }
+        .qa-q:hover { background: #e0e7ff; color: var(--brand); }
+        .qa-a { display: none; padding: 20px; background: white; border-top: 1px solid #e2e8f0; color: #334155; }
+        .qa-toggle {
+            background: var(--brand); color: white; width: 24px; height: 24px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+        }
+        .extra-badge {
+            background: var(--accent); color: white; font-size: 0.7rem; padding: 2px 8px;
+            border-radius: 12px; margin-right: 10px; vertical-align: middle;
+        }
+
+        footer { text-align: center; padding: 3rem; color: var(--text-light); background: #e2e8f0; margin-top: 60px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Particulate Nature of Matter</h1>
+    <p>Complete Interactive Guide: Concepts, Simulations, and Full Solutions</p>
+	<p>WISDOM ACADEMY , M: 9577556400</p>
+</header>
+
+<div class="container">
+
+    <!-- TOPIC 1 -->
+    <div class="topic-wrapper active" id="t1">
+        <div class="topic-header" onclick="toggleTopic('t1')">
+            <h2 class="topic-title"><span class="icon-box">1</span> Composition of Matter</h2>
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div class="topic-content">
+            <div class="def-card">
+                <span class="def-label">Definition: Constituent Particle</span>
+                <p>The basic unit that makes up a larger piece of a substance or material. One whole piece of chalk is made up of a large number of these smaller units. They are extremely small and invisible to the naked eye.</p>
+            </div>
+
+            <div class="activity-box">
+                <span class="activity-title">Origins of Matter</span>
+                <p><strong>Q: Where do pebbles and sand come from?</strong><br>
+                In mountains, rocks break down due to erosion. Rivers carry these pieces, breaking them further into pebbles, stones, and sand, transporting them to plains.</p>
+            </div>
+
+            <div class="activity-box">
+                <span class="activity-title">Activity 7.1: Evidence from Chalk</span>
+                <p>Breaking a chalk stick and grinding it into powder reduces the size, but every tiny speck is still chalk. This is a <strong>Physical Change</strong>. It proves matter is composed of particles.</p>
+            </div>
+
+            <div class="activity-box">
+                <span class="activity-title">Activity 7.2: Evidence from Sugar</span>
+                <p>When sugar dissolves in water, it breaks into constituent particles. These spread among water particles. Though invisible, their presence is detected by the sweet taste.</p>
+            </div>
+
+            <div class="heritage-box">
+                <span class="heritage-badge">Scientific Heritage</span>
+                <p><strong>Acharya Kanad</strong>, an ancient Indian philosopher, believed that matter is made of tiny, indivisible, eternal particles called <em>Parmanu</em> (atom).</p>
+            </div>
+
+            <div class="extra-concept">
+                <strong>A Step Further: Atoms & Molecules</strong><br>
+                Constituent particles are often atoms or molecules. For example, Iron is made of Iron atoms. Water is made of Water molecules (H₂O). Two hydrogen atoms combine to form a stable hydrogen molecule.
+            </div>
+
+            <h3>Interactive Simulation: Breaking Matter</h3>
+            <p>Click the block to simulate mechanical breakdown into constituent particles.</p>
+            <div class="sim-wrapper">
+                <canvas id="simBreak" width="600" height="250"></canvas>
+                <div class="controls">
+                    <button class="btn-sim" onclick="resetBreak()">Reset Block</button>
+                </div>
+            </div>
+
+            <h3>Topic Questions</h3>
+            <div class="qa-list">
+                <div class="qa-item"><div class="qa-q" onclick="toggleAns(this)">Q: What is matter composed of? <span class="qa-toggle">+</span></div><div class="qa-a">Matter is composed of extremely small constituent particles, which are the basic building blocks of substances. These particles are held together by interparticle forces of attraction.</div></div>
+                <div class="qa-item"><div class="qa-q" onclick="toggleAns(this)">Q: What happens when you grind chalk? <span class="qa-toggle">+</span></div><div class="qa-a">Grinding chalk reduces it to smaller specks, which are still chalk (a physical change). Each speck consists of many tiny constituent particles.</div></div>
+                <div class="qa-item"><div class="qa-q" onclick="toggleAns(this)">Q: Why does ocean water taste salty if salt is invisible? <span class="qa-toggle">+</span></div><div class="qa-a">Ocean water tastes salty because salt dissolves into its constituent particles, which are too small to be seen. These particles spread among water particles, occupying interparticle spaces.</div></div>
+                <div class="qa-item"><div class="qa-q" onclick="toggleAns(this)"><span class="extra-badge">EXTRA</span> Q: Is the air we breathe today new? <span class="qa-toggle">+</span></div><div class="qa-a">The air contains the same <em>types</em> of particles (nitrogen, oxygen) as thousands of years ago, but the specific particles have cycled through natural processes like respiration and photosynthesis.</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOPIC 2 -->
+    <div class="topic-wrapper" id="t2">
+        <div class="topic-header" onclick="toggleTopic('t2')">
+            <h2 class="topic-title"><span class="icon-box">2</span> States of Matter</h2>
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div class="topic-content">
+            <div class="def-card">
+                <span class="def-label">Definition: Interparticle Attraction</span>
+                <p>The force that holds constituent particles together. The strength of this force determines the physical state of the substance (Solid, Liquid, or Gas).</p>
+            </div>
+
+            <h3>1. Solid State</h3>
+            <p>Particles are tightly packed with <strong>strong</strong> interparticle forces. They cannot move freely and only vibrate in fixed positions.</p>
+            <ul>
+                <li><strong>Properties:</strong> Fixed shape, fixed volume.</li>
+                <li><strong>Example (Activity 7.3):</strong> Iron, stone, wood (hard to break).</li>
+            </ul>
+
+            <h3>2. Liquid State</h3>
+            <p>Particles have <strong>weaker</strong> forces than solids. They can move within a limited space and slide past each other.</p>
+            <ul>
+                <li><strong>Properties:</strong> Fixed volume, no fixed shape (takes shape of container).</li>
+                <li><strong>Example (Activity 7.4):</strong> Water poured into different jars changes shape but keeps volume (200mL).</li>
+            </ul>
+
+            <h3>3. Gaseous State</h3>
+            <p>Particles have <strong>negligible</strong> forces. They move freely in all directions, filling the entire available space.</p>
+            <ul>
+                <li><strong>Properties:</strong> No fixed shape, no fixed volume.</li>
+                <li><strong>Example (Activity 7.5):</strong> Smoke or Iodine vapour fills the entire jar.</li>
+            </ul>
+
+            <div class="extra-concept">
+                <strong>Fluids:</strong> Both liquids and gases are classified as fluids because they can flow and do not retain a fixed shape.
+            </div>
+
+            <h3>Phase Changes</h3>
+            <div class="def-card">
+                <span class="def-label">Definitions: Melting & Boiling</span>
+                <p><strong>Melting Point:</strong> The temperature at which a solid turns into a liquid at atmospheric pressure (particles gain energy to overcome forces).</p>
+                <p><strong>Boiling Point:</strong> The temperature at which a liquid turns into a gas at atmospheric pressure (bulk phenomenon with bubbles).</p>
+            </div>
+
+            <table>
+                <thead><tr><th>Material</th><th>Melting Point</th></tr></thead>
+                <tbody>
+                    <tr><td>Ice</td><td>0 °C</td></tr>
+                    <tr><td>Urea</td><td>133 °C</td></tr>
+                    <tr><td>Iron</td><td>1538 °C</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Interactive Simulation: States of Matter</h3>
+            <p>Switch between modes to see how particles behave.</p>
+            <div class="sim-wrapper">
+                <canvas id="simStates" width="600" height="250"></canvas>
+                <div class="controls">
+                    <button class="btn-sim" onclick="setSimState('solid')">Solid</button>
+                    <button class="btn-sim" onclick="setSimState('liquid')">Liquid</button>
+                    <button class="btn-sim" onclick="setSimState('gas')">Gas</button>
+                </div>
+            </div>
+
+            <h3>Topic Questions</h3>
+            <div class="qa-list">
+                <div class="qa-item"><div class="qa-q" onclick="toggleAns(this)">Q: Why pile stones but not water? <span class="qa-toggle">+</span></div><div class="qa-a">Stones (solids) have strong interparticle forces keeping particles in fixed positions. Water (liquid) has weaker forces, so particles flow freely.</div></div>
+                <div class="qa-item"><div class="qa-q" onclick="toggleAns(this)">Q: Why does water lose shape when released from hands? <span class="qa-toggle">+</span></div><div class="qa-a">Water takes the shape of the container (hands). When released, particles flow due to weak interparticle forces, losing that shape.</div></div>
+                <div class="qa-item"><div class="qa-q" onclick="toggleAns(this)">Q: Evaporation vs Boiling? <span class="qa-toggle">+</span></div><div class="qa-a"><strong>Evaporation:</strong> Slow process at surface, occurs at any temperature.<br><strong>Boiling:</strong> Fast process throughout the liquid (bubbles), occurs at a specific boiling point.</div></div>
+                <div class="qa-item"><div class="qa-q" onclick="toggleAns(this)">Q: Are rice grains solid or liquid? <span class="qa-toggle">+</span></div><div class="qa-a">Solids. They appear to flow in bulk, but each individual grain retains its own fixed shape and volume due to strong forces.</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOPIC 3 -->
+    <div class="topic-wrapper" id="t3">
+        <div class="topic-header" onclick="toggleTopic('t3')">
+            <h2 class="topic-title"><span class="icon-box">3</span> Interparticle Spacing</h2>
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div class="topic-content">
+            <div class="def-card">
+                <span class="def-label">Concept: The Void</span>
+                <p>The space between constituent particles contains <strong>nothing</strong> (vacuum). It is not filled with air.</p>
+                <p><strong>Spacing Order:</strong> Solids (Min) &lt; Liquids &lt; Gases (Max).</p>
+            </div>
+
+            <div class="activity-box">
+                <span class="activity-title">Activity 7.6: Compressibility</span>
+                <p><strong>Experiment:</strong> A syringe with air compresses easily. A syringe with water does not.<br>
+                <strong>Conclusion:</strong> Gases have large interparticle spaces that can be reduced by pressure. Liquids and solids have minimal space.</p>
+            </div>
+
+            <div class="activity-box">
+                <span class="activity-title">Activity 7.7: Dissolving & Volume</span>
+                <p>When sugar dissolves in water, the volume does not increase significantly. This is because sugar particles occupy the existing empty spaces between water particles.</p>
+            </div>
+
+            <div class="extra-concept">
+                <strong>Dust vs. Particles:</strong> "Suspended Particulate Matter" (SPM) refers to dust in air. A dust particle is a large clump, made of millions of constituent particles (atoms).
+            </div>
+
+            <h3>Interactive Simulation: Compressibility</h3>
+            <p>Push the plunger. Observe that Gas compresses, but Liquid (simulated resistance) does not.</p>
+            <div class="sim-wrapper" style="background:white; border:1px solid #ccc; overflow:hidden; position:relative;">
+                <div style="width:300px; height:60px; border:4px solid #333; margin:0 auto; background:#f1f5f9; position:relative; overflow:hidden;">
+                    <div id="gas-particles" style="position:absolute; width:100%; height:100%;"></div>
+                    <div id="plunger" style="position:absolute; width:25px; height:100%; right:0; top:0; background:#64748b; transition: right 0.5s;"></div>
+                </div>
+                <div class="controls">
+                    <button class="btn-sim" style="background:#334155; color:white;" onclick="compressSyringe()">Compress</button>
+                    <button class="btn-sim" style="background:#334155; color:white;" onclick="releaseSyringe()">Release</button>
+                </div>
+            </div>
+
+            <h3>Topic Questions</h3>
+            <div class="qa-list">
+                <div class="qa-item"><div class="qa-q" onclick="toggleAns(this)">Q: How does invisible air add weight? <span class="qa-toggle">+</span></div><div class="qa-a">Air consists of gas particles that have mass. When a balloon is inflated, it contains many particles which collectively add weight.</div></div>
+                <div class="qa-item"><div class="qa-q" onclick="toggleAns(this)">Q: Why is water incompressible? <span class="qa-toggle">+</span></div><div class="qa-a">Water particles are closely packed with limited interparticle space, making it nearly incompressible compared to air.</div></div>
+                <div class="qa-item"><div class="qa-q" onclick="toggleAns(this)">Q: Why doesn't sand dissolve like sugar? <span class="qa-toggle">+</span></div><div class="qa-a">Sand has strong interparticle forces that water cannot break. Sugar has weaker forces that allow particles to separate and hide in water's spaces.</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOPIC 4 -->
+    <div class="topic-wrapper" id="t4">
+        <div class="topic-header" onclick="toggleTopic('t4')">
+            <h2 class="topic-title"><span class="icon-box">4</span> Movement & Thermal Energy</h2>
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div class="topic-content">
+            <div class="def-card">
+                <span class="def-label">Definition: Thermal Energy</span>
+                <p>Energy related to the temperature of the substance. Higher temperature means higher thermal energy, which causes particles to move faster.</p>
+            </div>
+
+            <div class="activity-box">
+                <span class="activity-title">Activity 7.8: Diffusion in Water</span>
+                <p>Potassium Permanganate spreads in water.
+                <br><strong>Observation:</strong> Spreads fastest in Hot Water, slowest in Ice-Cold Water.
+                <br><strong>Conclusion:</strong> Heat increases particle movement.</p>
+            </div>
+
+            <div class="activity-box">
+                <span class="activity-title">Activity 7.9: Diffusion in Air</span>
+                <p>Incense fragrance spreads because gas particles move rapidly and collide with air particles, distributing the scent.</p>
+            </div>
+
+            <div class="extra-concept">
+                <strong>Everyday Science: Soap Action</strong><br>
+                Soap particles have two ends. One attaches to oil, the other to water. They surround oil particles, lifting them off fabric so water can wash them away.
+            </div>
+
+            <h3>Interactive Simulation: Heat & Speed</h3>
+            <p>Use the slider. <strong>Hot = Fast (Red)</strong>. <strong>Cold = Slow (Blue)</strong>.</p>
+            <div class="sim-wrapper">
+                <canvas id="simHeat" width="600" height="250"></canvas>
+                <div class="controls">
+                    <span>Cold</span> <input type="range" id="tempSlider" min="1" max="100" value="20"> <span>Hot</span>
+                </div>
+            </div>
+
+            <h3>Topic Questions</h3>
+            <div class="qa-list">
+                <div class="qa-item"><div class="qa-q" onclick="toggleAns(this)">Q: How does temperature affect movement? <span class="qa-toggle">+</span></div><div class="qa-a">Higher temperatures increase thermal energy, causing particles to move faster. Solids vibrate more vigorously; gases move faster and farther apart.</div></div>
+                <div class="qa-item"><div class="qa-q" onclick="toggleAns(this)"><span class="extra-badge">EXTRA</span> Q: Why does smell reach far? <span class="qa-toggle">+</span></div><div class="qa-a">Because gas particles have negligible forces and move very quickly in all directions, carrying the scent through collisions with air.</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOPIC 5: EXERCISES -->
+    <div class="topic-wrapper" id="t5">
+        <div class="topic-header" onclick="toggleTopic('t5')">
+            <h2 class="topic-title"><span class="icon-box">5</span> Complete Exercises (Full Text)</h2>
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div class="topic-content">
+            <p>Below are the full questions and answers from the chapter exercises, including detailed justifications.</p>
+
+            <div class="qa-list">
+                <!-- Q1 -->
+                <div class="qa-item">
+                    <div class="qa-q" onclick="toggleAns(this)">Q1: Primary difference between solids and liquids? <span class="qa-toggle">+</span></div>
+                    <div class="qa-a">
+                        <strong>Q: Choose the correct option. The primary difference between solids and liquids is that the constituent particles are:</strong><br>
+                        (i) closely packed in solids, while they are stationary in liquids.<br>
+                        (ii) far apart in solids and have fixed position in liquids.<br>
+                        (iii) always moving in solids and have fixed position in liquids.<br>
+                        (iv) closely packed in solids and move past each other in liquids.<br><br>
+                        <strong>Answer: (iv) closely packed in solids and move past each other in liquids.</strong><br>
+                        <strong>Explanation:</strong> Solids have closely packed particles with strong interparticle forces, restricting movement to vibrations. Liquids have weaker forces, allowing particles to move past each other, giving liquids no fixed shape.
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="qa-item">
+                    <div class="qa-q" onclick="toggleAns(this)">Q2: True/False and Corrections <span class="qa-toggle">+</span></div>
+                    <div class="qa-a">
+                        <strong>Q: Which of the following statements are true? Correct the false statements.</strong><br><br>
+                        (i) Melting ice into water is an example of the transformation of a solid into a liquid.<br>
+                        <strong>Ans: True</strong><br><br>
+
+                        (ii) Melting process involves a decrease in interparticle attractions during the transformation.<br>
+                        <strong>Ans: False.</strong><br>
+                        <em>Corrected:</em> The melting process involves particles gaining thermal energy to overcome interparticle attractions, allowing them to move apart.<br><br>
+
+                        (iii) Solids have a fixed shape and a fixed volume.<br>
+                        <strong>Ans: True</strong><br><br>
+
+                        (iv) The interparticle interactions in solids are very strong, and the interparticle spaces are very small.<br>
+                        <strong>Ans: True</strong><br><br>
+
+                        (v) When we heat camphor in one corner of a room, the fragrance reaches all corners of the room.<br>
+                        <strong>Ans: True</strong> (Camphor sublimates and diffuses).<br><br>
+
+                        (vi) On heating, we are adding energy to the camphor, and the energy is released as a smell.<br>
+                        <strong>Ans: False.</strong><br>
+                        <em>Corrected:</em> On heating, we add energy to the camphor, causing it to change into vapour; the smell is not energy release, but the vapour molecules reaching our nose.
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="qa-item">
+                    <div class="qa-q" onclick="toggleAns(this)">Q3: If we remove particles from a chair? <span class="qa-toggle">+</span></div>
+                    <div class="qa-a">
+                        <strong>Q: Choose the correct answer with justification. If we could remove all the constituent particles from a chair, what would happen?</strong><br>
+                        (i) Nothing will change.<br>
+                        (ii) The chair will weigh less due to lost particles.<br>
+                        (iii) Nothing of the chair will remain.<br><br>
+                        <strong>Correct Answer: (iii) Nothing of the chair will remain.</strong><br><br>
+                        <strong>Justification:</strong> A chair, like all objects, is made up of constituent particles such as atoms and molecules, which are held together by various forces. These particles define the chair’s structure, mass, and physical properties. If we could remove all the constituent particles:<br>
+                        - <em>Option (i)</em> is incorrect because removing all particles would eliminate the chair’s physical existence.<br>
+                        - <em>Option (ii)</em> is incorrect because weight is determined by the total number of particles. If all particles are removed, the chair would cease to exist, and the concept of weight would no longer apply.<br>
+                        - <em>Option (iii)</em> is correct. Removing all constituent particles would mean disassembling the chair at its most fundamental level, leaving no material or physical form behind. The chair would effectively disappear.
+                    </div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="qa-item">
+                    <div class="qa-q" onclick="toggleAns(this)">Q4: Why gases mix easily, solids do not? <span class="qa-toggle">+</span></div>
+                    <div class="qa-a">
+                        Gases mix easily because the molecules in a gas are far apart and move very quickly in all directions. This high speed and large spacing mean they can spread out and intermingle without much restriction. In solids, the particles are tightly packed in fixed positions and can only vibrate in place, so they cannot move freely to mix with particles of another solid.
+                    </div>
+                </div>
+
+                <!-- Q5 -->
+                <div class="qa-item">
+                    <div class="qa-q" onclick="toggleAns(this)">Q5: Milk flows, glass tumbler stays shaped. Justify. <span class="qa-toggle">+</span></div>
+                    <div class="qa-a">
+                        Milk flows and spreads out because it is a liquid, and in liquids, particles are close together but can slide past each other. This allows a liquid to take the shape of its container and flow. The glass tumbler keeps its shape because it is a solid, and in solids, particles are tightly packed in fixed positions, so they can only vibrate but cannot move around. This rigidity makes a solid maintain its own shape.
+                    </div>
+                </div>
+
+                <!-- Q6 -->
+                <div class="qa-item">
+                    <div class="qa-q" onclick="toggleAns(this)">Q6: Diagram changes: Ice to Water Vapour. <span class="qa-toggle">+</span></div>
+                    <div class="qa-a">
+                        (Diagram Description based on text concepts):<br>
+                        <strong>Ice (Solid):</strong> Particles are arranged in a regular, tightly packed grid pattern.<br>
+                        ↓<br>
+                        <strong>Water (Liquid):</strong> Particles are close together but disordered/randomly arranged.<br>
+                        ↓<br>
+                        <strong>Vapour (Gas):</strong> Particles are very far apart and distributed randomly in space.
+                    </div>
+                </div>
+
+                <!-- Q7 -->
+                <div class="qa-item">
+                    <div class="qa-q" onclick="toggleAns(this)">Q7: Particle Pictures (Al, Glycerin, Methane) <span class="qa-toggle">+</span></div>
+                    <div class="qa-a">
+                        <strong>(i) Aluminum foil (Solid):</strong> Draw particles in a tightly packed, orderly grid.<br>
+                        <strong>(ii) Glycerin (Liquid):</strong> Draw particles close together but in a random, non-grid arrangement.<br>
+                        <strong>(iii) Methane gas (Gas):</strong> Draw particles far apart from each other.
+                    </div>
+                </div>
+
+                <!-- Q8 -->
+                <div class="qa-item">
+                    <div class="qa-q" onclick="toggleAns(this)">Q8: Identify states of wax in a candle. <span class="qa-toggle">+</span></div>
+                    <div class="qa-a">
+                        <strong>Solid wax:</strong> The unburned wax body (closely packed particles).<br>
+                        <strong>Liquid wax:</strong> The melted wax around the wick (particles moving freely in limited space).<br>
+                        <strong>Gaseous wax:</strong> The wax vapour that burns in the flame (particles moving freely in all directions).
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    &copy; Particulate Nature of Matter Guide. Content sourced from Chapter 7.
+</footer>
+
+<script>
+    // --- ACCORDION LOGIC ---
+    function toggleTopic(id) {
+        const el = document.getElementById(id);
+        const isOpen = el.classList.contains('active');
+        document.querySelectorAll('.topic-wrapper').forEach(t => t.classList.remove('active'));
+        if(!isOpen) {
+            el.classList.add('active');
+            stopAnim();
+            if(id==='t1') initBreak();
+            if(id==='t2') initStates();
+            if(id==='t3') initSyringe();
+            if(id==='t4') initHeat();
+        } else {
+            stopAnim();
+        }
+    }
+
+    function toggleAns(el) {
+        const ans = el.nextElementSibling;
+        const icon = el.querySelector('.qa-toggle');
+        if(ans.style.display === 'block') {
+            ans.style.display = 'none'; icon.textContent = '+'; el.style.background = '#f8fafc';
+        } else {
+            ans.style.display = 'block'; icon.textContent = '-'; el.style.background = '#e0e7ff';
+        }
+    }
+
+    // --- ANIMATION SYSTEM ---
+    let animId = null;
+    function stopAnim() { if(animId) cancelAnimationFrame(animId); }
+
+    // --- SIM 1: BREAKING ---
+    let bParts = [];
+    function initBreak() {
+        const c = document.getElementById('simBreak'); const ctx = c.getContext('2d');
+        resetBreak();
+        c.onclick = () => { bParts.forEach(p => { p.broken=true; p.vx=(Math.random()-0.5)*12; p.vy=(Math.random()-0.5)*12; }) };
+        function draw() {
+            ctx.fillStyle = '#1e293b'; ctx.fillRect(0,0,c.width,c.height);
+            ctx.fillStyle = '#f59e0b';
+            bParts.forEach(p => {
+                if(p.broken){ p.x+=p.vx; p.y+=p.vy; }
+                ctx.beginPath(); ctx.arc(p.x,p.y,5,0,Math.PI*2); ctx.fill();
+            });
+            if(!bParts.broken) { ctx.fillStyle='white'; ctx.font='20px Segoe UI'; ctx.fillText("Click block to break", 220, 50); }
+            animId = requestAnimationFrame(draw);
+        }
+        draw();
+    }
+    function resetBreak() { bParts=[]; for(let i=0;i<20;i++) for(let j=0;j<10;j++) bParts.push({x:200+i*10,y:100+j*10,vx:0,vy:0,broken:false}); }
+
+    // --- SIM 2: STATES ---
+    let sMode = 'solid', sParts = [];
+    function setSimState(m) { 
+        sMode = m; 
+        document.querySelectorAll('.btn-sim').forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+        sParts = []; for(let i=0;i<60;i++) sParts.push({x:Math.random()*600,y:Math.random()*250,vx:0,vy:0,bx:200+(i%10)*20,by:80+Math.floor(i/10)*20});
+    }
+    function initStates() {
+        const c = document.getElementById('simStates'); const ctx = c.getContext('2d'); setSimState('solid');
+        function draw() {
+            ctx.fillStyle = '#1e293b'; ctx.fillRect(0,0,c.width,c.height);
+            sParts.forEach(p => {
+                if(sMode==='solid') { p.x=p.bx+(Math.random()-0.5); p.y=p.by+(Math.random()-0.5); ctx.fillStyle='#4f46e5'; }
+                else if(sMode==='liquid') {
+                    p.vx+=(Math.random()-0.5)*0.5; p.vy+=(Math.random()-0.5)*0.5+0.05; p.x+=p.vx; p.y+=p.vy;
+                    p.vx*=0.95; p.vy*=0.95; if(p.y>240) p.vy*=-0.6; if(p.x<0||p.x>600) p.vx*=-1;
+                    ctx.fillStyle='#f59e0b';
+                } else {
+                    p.x+=p.vx||(p.vx=(Math.random()-0.5)*5); p.y+=p.vy||(p.vy=(Math.random()-0.5)*5);
+                    if(p.x<0||p.x>600) p.vx*=-1; if(p.y<0||p.y>250) p.vy*=-1;
+                    ctx.fillStyle='#ef4444';
+                }
+                ctx.beginPath(); ctx.arc(p.x,p.y,6,0,Math.PI*2); ctx.fill();
+            });
+            ctx.fillStyle='white'; ctx.fillText(sMode.toUpperCase(), 10, 20); animId=requestAnimationFrame(draw);
+        }
+        draw();
+    }
+
+    // --- SIM 3: SYRINGE ---
+    function initSyringe() {
+        const con = document.getElementById('gas-particles'); con.innerHTML = '';
+        for(let i=0;i<40;i++) {
+            let d = document.createElement('div');
+            d.style.cssText = `width:8px;height:8px;background:#ef4444;border-radius:50%;position:absolute;transition:left 0.5s;`;
+            d.style.left=Math.random()*90+'%'; d.style.top=Math.random()*90+'%'; con.appendChild(d);
+        }
+        document.getElementById('plunger').style.right='0';
+    }
+    function compressSyringe() { document.getElementById('plunger').style.right='50%'; Array.from(document.getElementById('gas-particles').children).forEach(d => d.style.left=Math.random()*45+'%'); }
+    function releaseSyringe() { document.getElementById('plunger').style.right='0'; Array.from(document.getElementById('gas-particles').children).forEach(d => d.style.left=Math.random()*90+'%'); }
+
+    // --- SIM 4: HEAT ---
+    function initHeat() {
+        const c = document.getElementById('simHeat'); const ctx = c.getContext('2d'); const s = document.getElementById('tempSlider');
+        let hParts=[]; for(let i=0;i<50;i++) hParts.push({x:300,y:125,vx:0,vy:0,bx:200+(i%10)*20,by:80+Math.floor(i/10)*20});
+        function draw() {
+            ctx.fillStyle = '#1e293b'; ctx.fillRect(0,0,c.width,c.height);
+            let t = parseInt(s.value);
+            hParts.forEach(p => {
+                if(t<30) { p.x=p.bx+(Math.random()-0.5)*(t/5); p.y=p.by+(Math.random()-0.5)*(t/5); ctx.fillStyle='#4f46e5'; }
+                else {
+                    let sp = t/15; p.vx+=(Math.random()-0.5)*sp*0.2; p.vy+=(Math.random()-0.5)*sp*0.2;
+                    p.x+=p.vx; p.y+=p.vy; p.vx*=0.95; p.vy*=0.95;
+                    if(p.x<0||p.x>600) p.vx*=-1; if(p.y<0||p.y>250) p.vy*=-1;
+                    ctx.fillStyle = t>60?'#ef4444':'#f59e0b';
+                }
+                ctx.beginPath(); ctx.arc(p.x,p.y,7,0,Math.PI*2); ctx.fill();
+            });
+            ctx.fillStyle='white'; ctx.fillText("Temp: "+t, 10, 20); animId=requestAnimationFrame(draw);
+        }
+        draw();
+    }
+
+    // Init first sim
+    window.onload = function() { initBreak(); };
+</script>
+
+</body>
+</html>

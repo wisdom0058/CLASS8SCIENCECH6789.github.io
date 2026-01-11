@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Amazing World of Solutes, Solvents, and Solutions</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #34495e;
+            --accent: #2980b9;
+            --light: #ecf0f1;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --danger: #c0392b;
+            --text: #333;
+            --bg: #fdfdfd;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        header h1 { margin: 0; font-size: 2.2rem; }
+        header p { margin-top: 10px; opacity: 0.9; font-size: 1.1rem; }
+
+        /* Accordion Styles */
+        .topic-btn {
+            background-color: white;
+            color: var(--primary);
+            cursor: pointer;
+            padding: 22px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.2rem;
+            font-weight: 700;
+            transition: 0.3s;
+            border-left: 6px solid var(--accent);
+            margin-bottom: 12px;
+            border-radius: 8px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .topic-btn:hover { background-color: #f1f8ff; }
+        .topic-btn.active { background-color: var(--accent); color: white; border-left-color: var(--primary); }
+        .topic-btn:after { content: '\002B'; font-size: 1.5rem; }
+        .topic-btn.active:after { content: "\2212"; }
+
+        .panel {
+            padding: 0 20px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            margin-bottom: 10px;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        /* Content Styling */
+        h3 { color: var(--accent); border-bottom: 2px solid #f0f0f0; padding-bottom: 8px; margin-top: 25px; }
+        h4 { color: var(--secondary); margin-top: 20px; }
+        
+        .concept-card {
+            background: #f8f9fa;
+            border-left: 4px solid var(--success);
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .highlight-box {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        /* Simulation Boxes */
+        .sim-box {
+            background: #eef6fb;
+            border: 2px dashed var(--accent);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        
+        .sim-controls button, .sim-controls input {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: var(--primary);
+            color: white;
+            font-size: 1rem;
+            transition: transform 0.1s, background 0.2s;
+        }
+        .sim-controls button:hover { background: var(--secondary); }
+        .sim-controls button:active { transform: scale(0.95); }
+
+        /* Beaker/Animation Elements */
+        .beaker {
+            position: relative;
+            width: 140px;
+            height: 180px;
+            border: 4px solid #95a5a6;
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+            margin: 20px auto;
+            background: rgba(255,255,255,0.8);
+            overflow: hidden;
+        }
+        .liquid {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60%;
+            background: rgba(52, 152, 219, 0.4);
+            transition: all 1s ease;
+        }
+        .particle {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            position: absolute;
+            transition: top 1.5s ease, opacity 1s ease;
+        }
+
+        /* Q&A Styles */
+        .qa-container { margin-top: 20px; }
+        .qa-item {
+            border: 1px solid #e0e0e0;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .qa-question {
+            background: #fdfdfd;
+            padding: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .qa-question:hover { background: #f0f0f0; }
+        .qa-answer {
+            display: none;
+            padding: 20px;
+            background: #fff;
+            color: #444;
+            border-top: 1px solid #e0e0e0;
+            line-height: 1.7;
+        }
+        .qa-answer strong { color: var(--success); }
+
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.95rem; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: var(--primary); color: white; }
+
+        /* Formula Box */
+        .formula {
+            font-family: 'Courier New', monospace;
+            background: #333;
+            color: #fff;
+            padding: 10px;
+            border-radius: 4px;
+            display: inline-block;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Chapter 9: The Amazing World of Solutes, Solvents, and Solutions</h1>
+    <p>WISDOM ACADEMY , M: 9577556400</p>
+</header>
+
+<div class="container">
+
+    <!-- TOPIC 1 -->
+    <button class="topic-btn">1. Mixtures, Solutes, Solvents & Solutions</button>
+    <div class="panel">
+        <div class="concept-card">
+            <h3>Concept 1: Types of Mixtures</h3>
+            <p><strong>Uniform Mixture (Solution):</strong> The components are evenly distributed throughout. They are indistinguishable, even under a microscope.
+            <br><em>Examples:</em> Salt in water, Sugar in water, ORS (Oral Rehydration Solution), Air.</p>
+            <p><strong>Non-Uniform Mixture:</strong> The components are not evenly distributed. You can see the separate particles.
+            <br><em>Examples:</em> Sand in water, Sawdust in water, Chalk powder in water.</p>
+        </div>
+
+        <div class="concept-card">
+            <h3>Concept 2: Components of a Solution</h3>
+            <p>A solution is made of two parts:</p>
+            <ul>
+                <li><strong>Solute:</strong> The substance present in a <strong>smaller amount</strong> that gets dissolved. (e.g., Salt).</li>
+                <li><strong>Solvent:</strong> The substance present in a <strong>larger amount</strong> that dissolves the solute. (e.g., Water).</li>
+            </ul>
+        </div>
+
+        <div class="highlight-box">
+            <strong>Key Examples from Text:</strong><br>
+            1. <strong>ORS:</strong> Every sip tastes the same because it is a uniform mixture.<br>
+            2. <strong>Air:</strong> A gaseous solution. <strong>Nitrogen</strong> (78%) is the solvent. Oxygen, Argon, CO<sub>2</sub> are solutes.<br>
+            3. <strong>Gulab Jamun Syrup (Chashni):</strong> Even though there is a lot of sugar, <strong>Water</strong> is the solvent because it is the liquid dissolving the solid.<br>
+            4. <strong>Gold:</strong> 
+               <ul>
+                   <li><em>As a Mineral:</em> Naturally occurring in Earth's crust with definite composition.</li>
+                   <li><em>As a Metal:</em> Malleable, ductile, conductive element.</li>
+               </ul>
+        </div>
+
+        <!-- SIMULATION 1 -->
+        <div class="sim-box">
+            <h3>Interactive: Mixing Simulator</h3>
+            <p>Add substances to water and observe if they form a Solution or a Non-Uniform Mixture.</p>
+            <div class="sim-controls">
+                <button onclick="mixSim('salt')">Add Salt (Solute)</button>
+                <button onclick="mixSim('sand')">Add Sand (Insoluble)</button>
+                <button onclick="mixSim('reset')">Reset Beaker</button>
+            </div>
+            <div class="beaker" id="mixBeaker">
+                <div class="liquid"></div>
+            </div>
+            <p id="mixResult" style="font-weight: bold; min-height: 30px;">Status: Pure Water</p>
+        </div>
+
+        <!-- Questions -->
+        <div class="qa-container">
+            <h4>Topic Questions (Click to Reveal)</h4>
+            <div class="qa-item">
+                <div class="qa-question" onclick="toggleAns(this)">Q1: What is a solution, and why does every sip of homemade ORS taste the same? <span>&#9660;</span></div>
+                <div class="qa-answer">A solution is a uniform mixture where components are evenly distributed. Homemade ORS tastes the same because sugar and salt are uniformly dissolved in water, creating a consistent composition throughout.</div>
+            </div>
+            <div class="qa-item">
+                <div class="qa-question" onclick="toggleAns(this)">Q2: Is air considered a solution? If so, what are its solvent and solutes? <span>&#9660;</span></div>
+                <div class="qa-answer">Yes, air is a gaseous solution. Nitrogen (largest amount, 78%) is the solvent, while Oxygen, Argon, and Carbon Dioxide are solutes.</div>
+            </div>
+            <div class="qa-item">
+                <div class="qa-question" onclick="toggleAns(this)">Q3: How can gold be classified as both a mineral and a metal? <span>&#9660;</span></div>
+                <div class="qa-answer"><strong>Mineral:</strong> It occurs naturally in Earth's crust with a definite chemical composition.<br><strong>Metal:</strong> It is an element with properties like malleability, ductility, and electrical conductivity.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOPIC 2 -->
+    <button class="topic-btn">2. Solubility and Temperature</button>
+    <div class="panel">
+        <div class="concept-card">
+            <h3>Solubility Concepts</h3>
+            <p><strong>Solubility:</strong> The maximum amount of solute that can dissolve in a fixed quantity of solvent at a specific temperature.</p>
+            <ul>
+                <li><strong>Unsaturated Solution:</strong> More solute can still be dissolved at that temperature.</li>
+                <li><strong>Saturated Solution:</strong> No more solute can dissolve at that temperature; maximum limit reached.</li>
+                <li><strong>Concentration:</strong> Amount of solute in a solution. (Dilute = less solute; Concentrated = more solute).</li>
+            </ul>
+        </div>
+
+        <div class="concept-card">
+            <h3>Effect of Temperature</h3>
+            <p><strong>1. Solids in Liquids:</strong> Solubility generally <strong>INCREASES</strong> with temperature.<br>
+            <em>Example:</em> Baking soda dissolves better in hot water (70°C) than cold water (20°C).</p>
+            <p><strong>2. Gases in Liquids:</strong> Solubility generally <strong>DECREASES</strong> with temperature.<br>
+            <em>Example:</em> Cold water holds more dissolved Oxygen (good for fish). Warm water holds less Oxygen.</p>
+        </div>
+
+        <div class="highlight-box">
+            <strong>Real World Connections:</strong><br>
+            <strong>Asima Chatterjee:</strong> Famous Indian scientist who used solvents to extract medicinal compounds for anti-epileptic and anti-malarial drugs.<br>
+            <strong>Traditional Medicine:</strong> Ayurveda and Siddha use water, oils, ghee, and milk as solvents for herbs.
+        </div>
+
+        <!-- SIMULATION 2 -->
+        <div class="sim-box">
+            <h3>Interactive: Heat and Solubility</h3>
+            <p>Adjust temperature to see the effect on Baking Soda (Solid) vs. Oxygen (Gas).</p>
+            <input type="range" id="tempRange" min="0" max="100" value="20" style="width: 80%;" oninput="tempSim(this.value)">
+            <p>Temperature: <span id="tempVal">20</span>°C</p>
+            
+            <div style="display: flex; justify-content: space-around; margin-top: 20px;">
+                <div style="width: 40%;">
+                    <p>Solid Solubility (Baking Soda)</p>
+                    <div style="height: 100px; background: #ddd; position: relative; border-radius: 5px;">
+                        <div id="solidBar" style="background: var(--success); width: 100%; position: absolute; bottom: 0; height: 20%; transition: height 0.3s;"></div>
+                    </div>
+                </div>
+                <div style="width: 40%;">
+                    <p>Gas Solubility (Oxygen)</p>
+                    <div style="height: 100px; background: #ddd; position: relative; border-radius: 5px;">
+                        <div id="gasBar" style="background: var(--accent); width: 100%; position: absolute; bottom: 0; height: 80%; transition: height 0.3s;"></div>
+                    </div>
+                </div>
+            </div>
+            <p id="tempText" style="margin-top: 15px; font-style: italic;">At 20°C: Moderate solid solubility, High Oxygen for aquatic life.</p>
+        </div>
+
+        <!-- Questions -->
+        <div class="qa-container">
+            <h4>Topic Questions (Click to Reveal)</h4>
+            <div class="qa-item">
+                <div class="qa-question" onclick="toggleAns(this)">Q4: What is a saturated solution? <span>&#9660;</span></div>
+                <div class="qa-answer">A solution in which the maximum amount of solute has been dissolved at a given temperature, and no more solute can dissolve.</div>
+            </div>
+            <div class="qa-item">
+                <div class="qa-question" onclick="toggleAns(this)">Q5: How does the dissolution of baking soda demonstrate the effect of temperature? <span>&#9660;</span></div>
+                <div class="qa-answer">At 20°C, some baking soda remains undissolved. Heating to 50°C dissolves more, and at 70°C, it all dissolves. This shows solid solubility increases with temperature.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOPIC 3 -->
+    <button class="topic-btn">3. Density</button>
+    <div class="panel">
+        <div class="concept-card">
+            <h3>What is Density?</h3>
+            <p>Density is the mass per unit volume. It describes how "packed" matter is.</p>
+            <div class="formula">Density = Mass / Volume</div>
+            <p><strong>SI Unit:</strong> kg/m³<br>
+            <strong>Liquid Units:</strong> g/mL or g/cm³</p>
+        </div>
+
+        <div class="concept-card">
+            <h3>Factors Affecting Density</h3>
+            <ul>
+                <li><strong>Temperature:</strong> Heating causes expansion (volume increases), so <strong>Density Decreases</strong>. (Example: Hot air rises).</li>
+                <li><strong>Pressure:</strong> Increasing pressure compresses gases (Volume decreases), so <strong>Density Increases</strong>. Solids/liquids are barely affected.</li>
+            </ul>
+            <p><strong>Relative Density:</strong> Ratio of substance density to water density. (No unit).</p>
+        </div>
+
+        <!-- SIMULATION 3 -->
+        <div class="sim-box">
+            <h3>Density Calculator</h3>
+            <div class="sim-controls">
+                <label>Mass (g): <input type="number" id="calcMass" value="400" style="width: 80px;"></label>
+                <label>Volume (cm³): <input type="number" id="calcVol" value="40" style="width: 80px;"></label>
+                <button onclick="calcDensity()">Calculate</button>
+            </div>
+            <p id="calcResult" style="font-size: 1.2rem; font-weight: bold; color: var(--primary);">Result: --</p>
+        </div>
+
+        <!-- Questions -->
+        <div class="qa-container">
+            <h4>Topic Questions (Click to Reveal)</h4>
+            <div class="qa-item">
+                <div class="qa-question" onclick="toggleAns(this)">Q6: Reema moulds 120g of clay (60cm³) into a sheet. Does density change? <span>&#9660;</span></div>
+                <div class="qa-answer">No. Density = Mass/Volume (120/60 = 2 g/cm³). Changing the shape does not change the mass or the volume of the material itself, so density remains the same.</div>
+            </div>
+            <div class="qa-item">
+                <div class="qa-question" onclick="toggleAns(this)">Q7: How do Earth's layers demonstrate density? <span>&#9660;</span></div>
+                <div class="qa-answer">Earth's layers increase in density from the surface to the center. The crust is lightest, while the inner core is the densest due to high pressure and compaction.</div>
+            </div>
+            <div class="qa-item">
+                <div class="qa-question" onclick="toggleAns(this)">Q8: Why does hot air rise? <span>&#9660;</span></div>
+                <div class="qa-answer">When air is heated, particles spread out (volume increases). Since Density = Mass/Volume, the density decreases. Hot air is less dense than cool air, so it rises.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOPIC 4 -->
+    <button class="topic-btn">4. Floating and Sinking</button>
+    <div class="panel">
+        <div class="concept-card">
+            <h3>The Rule of Flotation</h3>
+            <ul>
+                <li><strong>Floats:</strong> Object Density < Liquid Density.</li>
+                <li><strong>Sinks:</strong> Object Density > Liquid Density.</li>
+            </ul>
+            <p><strong>The Ice Anomaly:</strong> Water is heaviest at 4°C. When it freezes at 0°C, it expands. Ice is <em>less dense</em> than water, so it floats. This insulates aquatic life in winter.</p>
+        </div>
+
+        <div class="highlight-box">
+            <strong>Examples:</strong><br>
+            - <strong>Bamboo/Wood:</strong> Used for rafts because they are hollow/light and less dense than water.<br>
+            - <strong>Orange:</strong> Unpeeled floats (air pockets in peel). Peeled sinks (denser).<br>
+            - <strong>Egg:</strong> Sinks in fresh water. Floats in salty water (salt increases water density).
+        </div>
+
+        <!-- SIMULATION 4 -->
+        <div class="sim-box">
+            <h3>Interactive: Float or Sink?</h3>
+            <p>Water Density = 1.0 g/cm³</p>
+            <div class="sim-controls">
+                <label>Object Density (g/cm³): <input type="number" id="floatD" step="0.1" value="0.8" style="width: 70px;"></label>
+                <button onclick="floatSim()">Test</button>
+            </div>
+            <div class="beaker" id="floatBeaker" style="height: 150px;">
+                <div class="liquid" style="height: 100%;"></div>
+                <div id="simObj" style="width: 40px; height: 40px; background: #e67e22; border: 2px solid #d35400; position: absolute; left: 45px; top: -50px; transition: top 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 0.8rem;">Obj</div>
+            </div>
+            <p id="floatResult">Result: --</p>
+        </div>
+
+        <!-- Questions -->
+        <div class="qa-container">
+            <h4>Topic Questions (Click to Reveal)</h4>
+            <div class="qa-item">
+                <div class="qa-question" onclick="toggleAns(this)">Q9: Why does an unpeeled orange float while a peeled one sinks? <span>&#9660;</span></div>
+                <div class="qa-answer">The peel contains tiny air pockets, making the unpeeled orange's overall density less than water. Removing the peel removes the air, making it denser than water, so it sinks.</div>
+            </div>
+            <div class="qa-item">
+                <div class="qa-question" onclick="toggleAns(this)">Q10: Why does ice float on water? <span>&#9660;</span></div>
+                <div class="qa-answer">When water freezes at 0°C, its structure expands (takes up more space). This reduces its density below that of liquid water, allowing it to float.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOPIC 5 -->
+    <button class="topic-btn">5. Measurement of Mass and Volume</button>
+    <div class="panel">
+        <div class="concept-card">
+            <h3>How to Measure</h3>
+            <p><strong>Mass:</strong> Use a Balance (e.g., Digital Balance). Always use "Tare" to reset to zero with the container.</p>
+            <p><strong>Volume (Liquid):</strong> Use a Measuring Cylinder. Read the bottom of the meniscus.</p>
+            <p><strong>Volume (Irregular Solid):</strong> Use the <strong>Water Displacement Method</strong>.<br>
+            Formula: Volume = Final Water Level - Initial Water Level.</p>
+        </div>
+
+        <!-- SIMULATION 5 -->
+        <div class="sim-box">
+            <h3>Interactive: Water Displacement</h3>
+            <div class="beaker" style="width: 80px; height: 140px;">
+                <div id="dispLiquid" class="liquid" style="height: 50%; transition: height 0.8s;"></div>
+                <div id="dispStone" style="width: 30px; height: 30px; background: #7f8c8d; border-radius: 50%; position: absolute; bottom: 10px; left: 25px; display: none;"></div>
+            </div>
+            <p>Initial Volume: 50 mL</p>
+            <div class="sim-controls">
+                <button onclick="dispSim()">Drop Stone (Vol: 5 mL)</button>
+                <button onclick="resetDisp()">Reset</button>
+            </div>
+            <p id="dispResult">Current Level: 50 mL</p>
+        </div>
+    </div>
+
+    <!-- TOPIC 6 -->
+    <button class="topic-btn" style="background-color: #e8f8f5; border-left-color: var(--success); color: var(--primary);">6. Comprehensive Exercises (All Q&A)</button>
+    <div class="panel">
+        <p><em>Click on any question to reveal the full answer from the source.</em></p>
+
+        <h4>1. State True [T] or False [F] and Correct</h4>
+        <div class="qa-container">
+            <div class="qa-item">
+                <div class="qa-question" onclick="toggleAns(this)">(i) Oxygen gas is more soluble in hot water rather than in cold water. <span>&#9660;</span></div>
+                <div class="qa-answer"><strong>False.</strong> Oxygen gas is more soluble in cold water rather than in hot water.</div>
+            </div>
+            <div class="qa-item">
+                <div class="qa-question" onclick="toggleAns(this)">(ii) A mixture of sand and water is a solution. <span>&#9660;</span></div>
+                <div class="qa-answer"><strong>False.</strong> A mixture of sand and water is not a solution, it is a suspension (non-uniform).</div>
+            </div>
+            <div class="qa-item">
+                <div class="qa-question" onclick="toggleAns(this)">(iii) The amount of space occupied by any object is called its mass. <span>&#9660;</span></div>
+                <div class="qa-answer"><strong>False.</strong> The amount of space occupied by any object is called its <strong>volume</strong>, not mass.</div>
+            </div>
+            <div class="qa-item">
+                <div class="qa-question" onclick="toggleAns(this)">(iv) An unsaturated solution has more solute dissolved than a saturated solution. <span>&#9660;</span></div>
+                <div class="qa-answer"><strong>False.</strong> An unsaturated solution has <strong>less</strong> solute dissolved than a saturated solution.</div>
+            </div>
+            <div class="qa-item">
+                <div class="qa-question" onclick="toggleAns(this)">(v) The mixture of different gases in the atmosphere is also a solution. <span>&#9660;</span></div>
+                <div class="qa-answer"><strong>True.</strong> It is a gaseous solution.</div>
+            </div>
+        </div>
+
+        <h4>2. Fill in the Blanks</h4>
+        <div class="qa-item">
+            <div class="qa-question" onclick="toggleAns(this)">Click to see all answers <span>&#9660;</span></div>
+            <div class="qa-answer">
+                (i) The volume of a solid can be measured by the method of displacement, where the solid is <strong>submerged</strong> in water and the <strong>rise</strong> in water level is measured.<br>
+                (ii) The maximum amount of <strong>solute</strong> dissolved in <strong>solvent</strong> at a particular temperature is called solubility.<br>
+                (iii) Generally, the density <strong>decreases</strong> with increase in temperature.<br>
+                (iv) The solution where no more glucose can dissolve is called a <strong>saturated</strong> solution.
+            </div>
+        </div>
+
+        <h4>3. Multiple Choice & Analysis</h4>
+        <div class="qa-item">
+            <div class="qa-question" onclick="toggleAns(this)">Q3: You pour oil into water. The oil floats. What does this tell you? <span>&#9660;</span></div>
+            <div class="qa-answer"><strong>Answer: (ii) Water is denser than oil.</strong><br>Oil floats because it is less dense (~0.91 g/cm³) than water (1 g/cm³). They do not dissolve.</div>
+        </div>
+        <div class="qa-item">
+            <div class="qa-question" onclick="toggleAns(this)">Q5: Which statement about Saturated Solutions is correct? <span>&#9660;</span></div>
+            <div class="qa-answer"><strong>Answer: (iii) No more solute can be dissolved into the saturated solution at that temperature.</strong><br>A saturated solution has reached its maximum limit for dissolving solute at that specific temperature.</div>
+        </div>
+
+        <h4>4. Calculations</h4>
+        <div class="qa-item">
+            <div class="qa-question" onclick="toggleAns(this)">Q4: Stone sculpture 25 g, Volume 90 cm³. Density? Float/Sink? <span>&#9660;</span></div>
+            <div class="qa-answer">
+                Density = Mass / Volume = 25 / 90 = <strong>0.278 g/cm³</strong>.<br>
+                Since 0.278 < 1.0 (water), the stone will <strong>Float</strong>.
+            </div>
+        </div>
+        <div class="qa-item">
+            <div class="qa-question" onclick="toggleAns(this)">Q6: Bottle Volume 2 Liters. Water poured 50 mL. How much more can it hold? <span>&#9660;</span></div>
+            <div class="qa-answer">
+                2 Liters = 2000 mL.<br>
+                Remaining = 2000 mL - 50 mL = <strong>1950 mL</strong>.
+            </div>
+        </div>
+        <div class="qa-item">
+            <div class="qa-question" onclick="toggleAns(this)">Q7: Object Mass 400 g, Volume 40 cm³. Density? <span>&#9660;</span></div>
+            <div class="qa-answer">
+                Density = 400 / 40 = <strong>10 g/cm³</strong>.
+            </div>
+        </div>
+        <div class="qa-item">
+            <div class="qa-question" onclick="toggleAns(this)">Q9: Object A (200g, 40cm³) vs Object B (240g, 60cm³). Which is denser? <span>&#9660;</span></div>
+            <div class="qa-answer">
+                Density A = 200 / 40 = 5 g/cm³.<br>
+                Density B = 240 / 60 = 4 g/cm³.<br>
+                <strong>Object A</strong> is denser.
+            </div>
+        </div>
+        <div class="qa-item">
+            <div class="qa-question" onclick="toggleAns(this)">Q11: Iron block 600 g, Density 7.9 g/cm³. What is Volume? <span>&#9660;</span></div>
+            <div class="qa-answer">
+                Volume = Mass / Density<br>
+                Volume = 600 / 7.9 ≈ <strong>75.95 cm³</strong>.
+            </div>
+        </div>
+        <div class="qa-item">
+            <div class="qa-question" onclick="toggleAns(this)">Q12: Test tube in hot water (70°C). Water level rises. Effect on density? <span>&#9660;</span></div>
+            <div class="qa-answer">
+                Heating causes water to expand (Volume increases). Mass stays the same.<br>
+                Since Density = Mass/Volume, if Volume increases, <strong>Density decreases</strong>.
+            </div>
+        </div>
+    </div>
+    
+    <!-- EXTRA CULTURAL -->
+    <button class="topic-btn">7. Cultural Heritage: Ningel Village</button>
+    <div class="panel">
+        <div class="concept-card">
+            <h3>Salt Production in Manipur</h3>
+            <p>In Ningel village (Thoubal district), salt is produced using 100-year-old tree trunks to draw salty water from wells. The water is boiled in large pans to create round 'salt cakes', which are wrapped in traditional cloth (phanek).</p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // --- Accordion Logic ---
+    const acc = document.getElementsByClassName("topic-btn");
+    for (let i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight) {
+                panel.style.maxHeight = null;
+            } else {
+                // Open and set height automatically
+                panel.style.maxHeight = panel.scrollHeight + "px";
+            } 
+        });
+    }
+
+    // --- Q&A Toggle Logic ---
+    function toggleAns(questionDiv) {
+        const answer = questionDiv.nextElementSibling;
+        const arrow = questionDiv.querySelector('span');
+        const panel = questionDiv.closest('.panel');
+        
+        if (answer.style.display === "block") {
+            answer.style.display = "none";
+            arrow.innerHTML = "&#9660;";
+        } else {
+            answer.style.display = "block";
+            arrow.innerHTML = "&#9650;";
+        }
+        // Recalculate panel height so content isn't cut off
+        panel.style.maxHeight = panel.scrollHeight + "px";
+    }
+
+    // --- Simulation 1: Mixing ---
+    function mixSim(type) {
+        const beaker = document.getElementById('mixBeaker');
+        const result = document.getElementById('mixResult');
+        const liquid = beaker.querySelector('.liquid');
+        
+        // Clear old particles
+        beaker.querySelectorAll('.particle').forEach(p => p.remove());
+        liquid.style.background = "rgba(52, 152, 219, 0.4)";
+
+        if(type === 'reset') {
+            result.innerText = "Status: Pure Water";
+            return;
+        }
+
+        const count = 20;
+        const color = type === 'salt' ? 'white' : '#d35400';
+
+        for(let i=0; i<count; i++) {
+            let p = document.createElement('div');
+            p.className = 'particle';
+            p.style.backgroundColor = color;
+            p.style.left = Math.random() * 120 + 10 + 'px';
+            p.style.top = '10px';
+            beaker.appendChild(p);
+
+            setTimeout(() => {
+                if(type === 'salt') {
+                    // Dissolve animation
+                    p.style.top = Math.random() * 80 + 40 + 'px';
+                    p.style.opacity = 0; 
+                } else {
+                    // Sink animation
+                    p.style.top = '165px'; 
+                }
+            }, 100);
+        }
+
+        setTimeout(() => {
+            if(type === 'salt') {
+                result.innerText = "Solution Formed (Uniform Mixture)";
+                liquid.style.background = "rgba(52, 152, 219, 0.6)";
+            } else {
+                result.innerText = "Suspension (Non-Uniform Mixture)";
+            }
+        }, 1200);
+    }
+
+    // --- Simulation 2: Temperature ---
+    function tempSim(val) {
+        document.getElementById('tempVal').innerText = val;
+        
+        // Solid solubility increases with temp
+        const sHeight = 20 + (val * 0.8);
+        document.getElementById('solidBar').style.height = sHeight + '%';
+        
+        // Gas solubility decreases with temp
+        const gHeight = 100 - (val * 0.8);
+        document.getElementById('gasBar').style.height = gHeight + '%';
+
+        const txt = document.getElementById('tempText');
+        if(val < 30) txt.innerText = `At ${val}°C: High Oxygen (Fish are happy), Solids dissolve slowly.`;
+        else if(val > 70) txt.innerText = `At ${val}°C: Solids dissolve fast, Low Oxygen (Fish stressed).`;
+        else txt.innerText = `At ${val}°C: Moderate conditions.`;
+    }
+
+    // --- Simulation 3: Density Calc ---
+    function calcDensity() {
+        const m = document.getElementById('calcMass').value;
+        const v = document.getElementById('calcVol').value;
+        const r = document.getElementById('calcResult');
+        if(m && v) {
+            r.innerText = "Density = " + (m/v).toFixed(2) + " g/cm³";
+        }
+    }
+
+    // --- Simulation 4: Float ---
+    function floatSim() {
+        const d = parseFloat(document.getElementById('floatD').value);
+        const obj = document.getElementById('simObj');
+        const res = document.getElementById('floatResult');
+        
+        obj.style.top = "-50px"; // Reset
+        
+        setTimeout(() => {
+            if (d < 1.0) {
+                obj.style.top = "60px"; // Float
+                res.innerHTML = "<span style='color:green'>FLOATS</span> (Density < 1)";
+            } else {
+                obj.style.top = "135px"; // Sink
+                res.innerHTML = "<span style='color:red'>SINKS</span> (Density > 1)";
+            }
+        }, 100);
+    }
+
+    // --- Simulation 5: Displacement ---
+    function dispSim() {
+        const stone = document.getElementById('dispStone');
+        const liquid = document.getElementById('dispLiquid');
+        const res = document.getElementById('dispResult');
+
+        stone.style.display = 'block';
+        liquid.style.height = '60%'; // Rise
+        res.innerHTML = "Level Rose to 55 mL.<br>Volume = 5 mL";
+    }
+
+    function resetDisp() {
+        document.getElementById('dispStone').style.display = 'none';
+        document.getElementById('dispLiquid').style.height = '50%';
+        document.getElementById('dispResult').innerText = "Current Level: 50 mL";
+    }
+
+</script>
+
+</body>
+</html>

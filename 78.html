@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nature of Matter: Elements, Compounds, & Mixtures</title>
+    <style>
+        :root {
+            --primary: #2980b9;
+            --secondary: #2c3e50;
+            --accent: #e67e22;
+            --light: #ecf0f1;
+            --success: #27ae60;
+            --danger: #c0392b;
+            --card-bg: #ffffff;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Hero Header */
+        header {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            text-align: center;
+            padding: 4rem 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        h1 { margin: 0; font-size: 3rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .subtitle { font-size: 1.2rem; margin-top: 10px; font-weight: 300; opacity: 0.9; }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 15px 50px 15px;
+        }
+
+        /* Expandable Topic Cards */
+        .topic-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .topic-header {
+            background-color: white;
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 6px solid var(--primary);
+            transition: background 0.2s;
+        }
+        
+        .topic-header:hover { background-color: #f8f9fa; }
+        
+        .topic-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--secondary);
+            margin: 0;
+        }
+
+        .toggle-icon {
+            font-size: 1.5rem;
+            color: var(--primary);
+            transition: transform 0.3s;
+        }
+
+        .topic-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            background-color: white;
+            padding: 0 25px;
+        }
+
+        .topic-card.active .toggle-icon { transform: rotate(180deg); }
+        .topic-card.active .topic-content { padding-bottom: 25px; border-top: 1px solid #eee; }
+
+        /* Content Styling */
+        h3 { color: var(--accent); margin-top: 25px; border-bottom: 2px solid #eee; padding-bottom: 5px; }
+        h4 { color: var(--primary); margin-top: 15px; }
+        
+        p, li { font-size: 1.05rem; }
+        ul { list-style-type: disc; padding-left: 20px; }
+        
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.95rem; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: var(--secondary); color: white; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+
+        /* Simulation Box */
+        .sim-box {
+            background: #f8f9fa;
+            border: 2px dashed #bdc3c7;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            position: relative;
+        }
+        .sim-title { font-weight: bold; color: var(--danger); margin-bottom: 10px; display: block; }
+        
+        .btn {
+            background: var(--primary); color: white; border: none; padding: 10px 20px;
+            border-radius: 5px; cursor: pointer; font-size: 1rem; transition: background 0.3s; margin: 5px;
+        }
+        .btn:hover { background: var(--secondary); }
+
+        /* Q&A Section Styling */
+        .qa-section {
+            margin-top: 30px;
+            background-color: #eef2f3;
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid #dcdcdc;
+        }
+        .qa-label { 
+            background: var(--success); color: white; padding: 5px 10px; 
+            border-radius: 4px; font-size: 0.9rem; font-weight: bold; display: inline-block; margin-bottom: 10px;
+        }
+        
+        .question-item { margin-bottom: 10px; }
+        
+        .q-btn {
+            width: 100%; text-align: left; background: white; border: 1px solid #ccc;
+            padding: 12px; font-weight: 600; cursor: pointer; border-radius: 5px;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: all 0.2s;
+        }
+        .q-btn:hover { border-color: var(--primary); color: var(--primary); }
+        .q-btn::after { content: '+'; font-size: 1.2rem; font-weight: bold; }
+        .q-btn.active::after { content: '-'; }
+
+        .a-panel {
+            max-height: 0; overflow: hidden; transition: max-height 0.3s ease;
+            background: white; margin: 0 5px; border-left: 4px solid var(--success);
+        }
+        .a-content { padding: 15px; color: #444; }
+
+        /* Specific Animations */
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+        .floating { animation: float 3s ease-in-out infinite; display: inline-block; font-size: 2rem; margin: 10px; }
+
+        /* Electrolysis Animation Elements */
+        .beaker { width: 100px; height: 120px; border: 3px solid #555; border-top: none; margin: 10px auto; position: relative; background: rgba(52, 152, 219, 0.1); }
+        .electrode { width: 8px; height: 80px; background: #333; position: absolute; bottom: 0; }
+        .bubble { width: 4px; height: 4px; background: white; border-radius: 50%; position: absolute; opacity: 0; }
+        @keyframes rise { 0% { bottom: 0; opacity: 1; } 100% { bottom: 100%; opacity: 0; } }
+
+        /* Magnet Animation */
+        .particle-container { height: 100px; background: #fff; border: 1px solid #ccc; position: relative; margin-bottom: 10px; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; position: absolute; transition: all 1s; }
+
+        footer { text-align: center; margin-top: 50px; color: #777; font-size: 0.9rem; }
+        sup { color: var(--primary); font-weight: bold; }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Nature of Matter</h1>
+    <div class="subtitle">Elements, Compounds, and Mixtures</div>
+    <p>WISDOM ACDEMY , M: 9577556400</p>
+</header>
+
+<div class="container">
+    <p style="text-align: center; margin-bottom: 20px; font-style: italic;">Tap on any topic below to expand details, simulations, and questions.</p>
+
+    <!-- TOPIC 1: INTRODUCTION TO MATTER -->
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">1. Introduction to Matter</div>
+            <div class="toggle-icon">▼</div>
+        </div>
+        <div class="topic-content">
+            <h3>What is Matter?</h3>
+            <p>Matter is anything that has mass and takes up space. Everything you see around you that you can touch is usually matter.</p>
+            <ul>
+                <li><strong>Examples of Matter:</strong> Staircases, air, water, food, clothes, shoes, books, trees, balls, sticks.</li>
+                <li><strong>NOT Matter:</strong> Light, heat, electricity, thoughts, and emotions. These lack mass and do not occupy space.</li>
+            </ul>
+
+            <div class="sim-box">
+                <span class="sim-title">Interactive: Matter vs Non-Matter</span>
+                <p>Click items to classify them.</p>
+                <div id="matter-feedback" style="height: 30px; font-weight: bold; color: var(--primary);"></div>
+                <button class="btn" onclick="checkMatter('Chair', true)">🪑 Chair</button>
+                <button class="btn" onclick="checkMatter('Love', false)">❤️ Love</button>
+                <button class="btn" onclick="checkMatter('Air', true)">💨 Air</button>
+                <button class="btn" onclick="checkMatter('Thought', false)">💭 Thought</button>
+            </div>
+
+            <!-- Questions for Topic 1 -->
+            <div class="qa-section">
+                <div class="qa-label">Questions & Answers</div>
+                
+                <div class="question-item">
+                    <button class="q-btn">Q1: What is matter, and what are some examples of it?</button>
+                    <div class="a-panel"><div class="a-content">Matter is anything that has mass and takes up space. Examples include staircases, air, water, food, clothes, shoes, books, trees, balls, and sticks.</div></div>
+                </div>
+
+                <div class="question-item">
+                    <button class="q-btn">Q25: What is not considered matter?</button>
+                    <div class="a-panel"><div class="a-content">Light, heat, electricity, thoughts, and emotions are not matter, as they lack mass and do not occupy space.</div></div>
+                </div>
+
+                <div class="question-item">
+                    <button class="q-btn">Probe Question: Which entities in the picture consist of matter?</button>
+                    <div class="a-panel"><div class="a-content">Based on the opening illustration in the source, the children, football, trees, building, books, water bottle, and clothes are matter. Sunlight and the children's thoughts/happiness are not matter.</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOPIC 2: MIXTURES -->
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">2. Mixtures</div>
+            <div class="toggle-icon">▼</div>
+        </div>
+        <div class="topic-content">
+            <h3>Definition</h3>
+            <p>A mixture is formed when two or more substances are mixed together without undergoing a chemical reaction. Each substance retains its own properties. The individual substances are called <strong>components</strong>.</p>
+            <p><em>Note:</em> In common usage, components can be mixtures themselves (like in bhel puri), but in science, components are ideally pure substances.</p>
+
+            <h3>Types of Mixtures</h3>
+            <table border="1">
+                <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Examples</th>
+                </tr>
+                <tr>
+                    <td><strong>Uniform (Homogeneous)</strong></td>
+                    <td>Components are evenly distributed and indistinguishable, even under a microscope.</td>
+                    <td>Sugar in water, lemonade, soups, seawater, air, alloys.</td>
+                </tr>
+                <tr>
+                    <td><strong>Non-Uniform (Heterogeneous)</strong></td>
+                    <td>Components are visible with the naked eye or magnifying device.</td>
+                    <td>Sprout salad, poha, sand & gravel, muddy water.</td>
+                </tr>
+            </table>
+
+            <h3>Table 8.1: Classification of Mixtures</h3>
+            <ul>
+                <li><strong>Gas + Gas:</strong> Air (Uniform)</li>
+                <li><strong>Gas + Liquid:</strong> Aerated soda, Oxygen in water (Uniform)</li>
+                <li><strong>Solid + Gas:</strong> Smoke/Carbon particles in air (Non-uniform)</li>
+                <li><strong>Liquid + Liquid:</strong> Vinegar (Uniform), Oil & Water (Non-uniform)</li>
+                <li><strong>Solid + Liquid:</strong> Seawater (Uniform), Sand & Water (Non-uniform)</li>
+                <li><strong>Solid + Solid:</strong> Alloys (Uniform), Baking powder (Uniform mixture of baking soda & tartaric acid).</li>
+            </ul>
+
+            <h3>Special Mixtures: Alloys</h3>
+            <p>An alloy is a uniform mixture of metals (or metal + non-metal). Ancient Indian texts called this <em>Mishraloha</em> (e.g., in Charaka Samhita).</p>
+            <ul>
+                <li><strong>Stainless Steel:</strong> Iron, Nickel, Chromium, Carbon.</li>
+                <li><strong>Brass:</strong> Copper + Zinc.</li>
+                <li><strong>Bronze (Kamsya):</strong> Copper + Tin (Used in Dhokra art).</li>
+            </ul>
+
+            <!-- Questions for Topic 2 -->
+            <div class="qa-section">
+                <div class="qa-label">Questions & Answers</div>
+                <div class="question-item">
+                    <button class="q-btn">Q2: What is a mixture, and what are its components?</button>
+                    <div class="a-panel"><div class="a-content">A mixture is formed when two or more substances are mixed without chemical reaction. Each substance retains its properties. Components are the individual substances making up the mixture.</div></div>
+                </div>
+                <div class="question-item">
+                    <button class="q-btn">Q3: Difference between uniform and non-uniform mixtures?</button>
+                    <div class="a-panel"><div class="a-content">Uniform: Components evenly distributed/indistinguishable (e.g., sugar water). Non-uniform: Visible components (e.g., sprout salad).</div></div>
+                </div>
+                <div class="question-item">
+                    <button class="q-btn">Q6: What is an alloy?</button>
+                    <div class="a-panel"><div class="a-content">An alloy is a uniform mixture of two or more metals (or metal/non-metal). Examples: Stainless steel, Brass, Bronze.</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOPIC 3: AIR & POLLUTION -->
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">3. Air: A Special Mixture</div>
+            <div class="toggle-icon">▼</div>
+        </div>
+        <div class="topic-content">
+            <h3>Composition of Air</h3>
+            <p>Air is a <strong>uniform mixture</strong> of gases: Nitrogen (78%), Oxygen (supports combustion), Argon, Carbon Dioxide, and water vapor.</p>
+
+            <div class="sim-box">
+                <span class="sim-title">Activity 8.1: Test for Carbon Dioxide</span>
+                <p><strong>Method:</strong> Expose Lime Water (Calcium Hydroxide) to air.</p>
+                <div id="lime-water" style="width: 100px; height: 100px; background: #e0f7fa; border: 1px solid #ccc; border-radius: 50%; margin: 10px auto; display: flex; align-items: center; justify-content: center;">Clear</div>
+                <button class="btn" onclick="turnMilky()">Wait a few hours...</button>
+                <p id="lime-result"></p>
+                <p style="font-size: 0.9rem;">Reaction: Calcium Hydroxide + CO₂ → Calcium Carbonate (White/Milky) + Water.</p>
+            </div>
+
+            <h3>Dust & Pollution</h3>
+            <p><strong>Activity 8.2:</strong> Place a black sheet near a window. Tiny particles settle on it. These are dust particles suspended in air. They are <strong>pollutants</strong>, not an integral part of air.</p>
+            <p><strong>Major Pollutants:</strong> Particulate matter (soot), Carbon Monoxide, Ozone, Nitrogen Dioxide, Sulfur Dioxide. Air Quality is measured by <strong>AQI</strong> (Air Quality Index).</p>
+
+            <!-- Questions for Topic 3 -->
+            <div class="qa-section">
+                <div class="qa-label">Questions & Answers</div>
+                <div class="question-item">
+                    <button class="q-btn">Q7: Is air a mixture? If so, what type?</button>
+                    <div class="a-panel"><div class="a-content">Yes, air is a uniform mixture of gases like nitrogen, oxygen, argon, carbon dioxide, and water vapor.</div></div>
+                </div>
+                <div class="question-item">
+                    <button class="q-btn">Q8: How can the presence of carbon dioxide in air be demonstrated?</button>
+                    <div class="a-panel"><div class="a-content">Expose lime water to air. It turns milky due to formation of calcium carbonate, proving CO₂ presence.</div></div>
+                </div>
+                <div class="question-item">
+                    <button class="q-btn">Q9: What are dust particles?</button>
+                    <div class="a-panel"><div class="a-content">Dust particles are tiny solid particles suspended in air. They are considered pollutants, not integral to air.</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOPIC 4: PURE SUBSTANCES (Elements) -->
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">4. Pure Substances: Elements</div>
+            <div class="toggle-icon">▼</div>
+        </div>
+        <div class="topic-content">
+            <h3>Scientific Definition</h3>
+            <p>A pure substance consists of only <strong>one type of particle</strong> and cannot be separated by physical processes.</p>
+            <p><em>Contrast:</em> "Pure Milk" in shops means unadulterated. In science, milk is a mixture (water + fat + protein), so it is NOT pure. "Pure Iron" is scientifically pure.</p>
+
+            <h3>Elements</h3>
+            <p>An element is made of identical atoms and cannot be broken down simpler chemically.</p>
+            <ul>
+                <li><strong>Total Known:</strong> 118 Elements.</li>
+                <li><strong>Classification:</strong> Metals (Gold, Iron), Non-Metals (Carbon, Oxygen), Metalloids (Silicon, Boron).</li>
+                <li><strong>Molecules:</strong> When atoms of the same element combine (e.g., O + O = O₂ Oxygen Molecule).</li>
+            </ul>
+
+            <h3>States of Elements</h3>
+            <ul>
+                <li><strong>Solids:</strong> Most elements.</li>
+                <li><strong>Gases:</strong> 11 elements (Oxygen, Nitrogen, Helium, etc.).</li>
+                <li><strong>Liquids (at room temp):</strong> Only 2 - Mercury (Metal) and Bromine (Non-metal).</li>
+                <li><strong>Near Liquid:</strong> Gallium and Cesium melt at ~30°C.</li>
+            </ul>
+
+            <!-- Questions for Topic 4 -->
+            <div class="qa-section">
+                <div class="qa-label">Questions & Answers</div>
+                <div class="question-item">
+                    <button class="q-btn">Q11: What is a pure substance in science?</button>
+                    <div class="a-panel"><div class="a-content">A pure substance consists of only one type of particle and cannot be separated by physical processes (e.g., elements, compounds).</div></div>
+                </div>
+                <div class="question-item">
+                    <button class="q-btn">Q15: What is an element?</button>
+                    <div class="a-panel"><div class="a-content">An element is a pure substance made of identical atoms that cannot be broken down simpler chemically (e.g., Gold, Oxygen).</div></div>
+                </div>
+                <div class="question-item">
+                    <button class="q-btn">Q18: How many elements are known and what are their states?</button>
+                    <div class="a-panel"><div class="a-content">118 known. Most solids, 11 gases, 2 liquids (Mercury, Bromine). Gallium/Cesium melt at 30°C.</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOPIC 5: COMPOUNDS -->
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">5. Compounds</div>
+            <div class="toggle-icon">▼</div>
+        </div>
+        <div class="topic-content">
+            <h3>Definition</h3>
+            <p>A compound is a pure substance formed when two or more elements combine chemically in a fixed ratio. Properties are totally different from constituent elements.</p>
+
+            <h3>Example: Water (H₂O)</h3>
+            <ul>
+                <li><strong>Hydrogen:</strong> Fuel (Combustible).</li>
+                <li><strong>Oxygen:</strong> Supports combustion.</li>
+                <li><strong>Water:</strong> Extinguishes fire. (Totally new property!).</li>
+                <li><strong>Ratio:</strong> 2 Hydrogen atoms : 1 Oxygen atom.</li>
+            </ul>
+
+            <div class="sim-box">
+                <span class="sim-title">Activity 8.3: Electrolysis of Water</span>
+                <p>Passing 9V electricity through water breaks it into gases.</p>
+                <div class="beaker">
+                    <div class="electrode" style="left: 30px;"></div>
+                    <div class="electrode" style="right: 30px;"></div>
+                    <div id="bubbles-h" class="bubble" style="left: 32px;"></div>
+                    <div id="bubbles-o" class="bubble" style="right: 32px;"></div>
+                </div>
+                <button class="btn" onclick="startElectrolysis()">Turn On Battery</button>
+                <p id="electro-result" style="display:none; color: var(--success); font-weight:bold;">
+                    Pop Sound! (Hydrogen at Cathode) <br> Flame Glows! (Oxygen at Anode)
+                </p>
+                <p><em>Note: Hydrogen volume is double that of Oxygen.</em></p>
+            </div>
+
+            <!-- Questions for Topic 5 -->
+            <div class="qa-section">
+                <div class="qa-label">Questions & Answers</div>
+                <div class="question-item">
+                    <button class="q-btn">Q19: What is a compound?</button>
+                    <div class="a-panel"><div class="a-content">A pure substance formed when elements combine chemically in a fixed ratio, with properties different from its constituents.</div></div>
+                </div>
+                <div class="question-item">
+                    <button class="q-btn">Q14: What happens when electricity is passed through water?</button>
+                    <div class="a-panel"><div class="a-content">Water breaks into Hydrogen and Oxygen. Hydrogen pops with a candle; Oxygen makes flame glow brighter.</div></div>
+                </div>
+                <div class="question-item">
+                    <button class="q-btn">Q9 (Exercise): Daily life if water were a mixture?</button>
+                    <div class="a-panel"><div class="a-content">1. No liquid water (gases don't mix to liquid easily). 2. Explosive (H+O). 3. No biological processes. 4. No weather cycle.</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOPIC 6: EXPERIMENTS (Mixture vs Compound) -->
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">6. Experiments: Mixtures vs Compounds</div>
+            <div class="toggle-icon">▼</div>
+        </div>
+        <div class="topic-content">
+            <h3>Experiment A: Heating Sugar (Activity 8.4)</h3>
+            <p>When sugar is heated, it turns brown, then black (Charcoal/Carbon) and releases water droplets. This proves <strong>Sugar is a Compound</strong> of Carbon, Hydrogen, and Oxygen.</p>
+
+            <h3>Experiment B: Iron and Sulfur (Activity 8.5)</h3>
+            <p>Comparing Sample A (Mixture) and Sample B (Compound/Heated).</p>
+
+            <div class="sim-box">
+                <span class="sim-title">Interactive Magnet Test</span>
+                <div class="particle-container" id="particle-box">
+                    <!-- Particles added by JS -->
+                </div>
+                <div style="margin: 10px;">
+                    <button class="btn" onclick="setSim('mixture')">Reset: Mixture (Fe + S)</button>
+                    <button class="btn" onclick="setSim('compound')">Reset: Compound (FeS)</button>
+                </div>
+                <button class="btn" style="background-color: var(--danger);" onclick="runMagnet()">🧲 Apply Magnet</button>
+                <p id="mag-res"></p>
+            </div>
+
+            <table border="1">
+                <tr>
+                    <th>Property</th>
+                    <th>Mixture (Iron + Sulfur)</th>
+                    <th>Compound (Iron Sulfide)</th>
+                </tr>
+                <tr>
+                    <td><strong>Appearance</strong></td>
+                    <td>Visible black & yellow particles</td>
+                    <td>Uniform black mass</td>
+                </tr>
+                <tr>
+                    <td><strong>Magnet</strong></td>
+                    <td>Iron attracted (Separable)</td>
+                    <td>No effect (Inseparable)</td>
+                </tr>
+                <tr>
+                    <td><strong>Acid Reaction</strong></td>
+                    <td>Hydrogen Gas (Pop sound)</td>
+                    <td>H₂S Gas (Rotten egg smell)</td>
+                </tr>
+            </table>
+            <p><strong>Equation:</strong> Fe + S → FeS (Iron Sulfide).</p>
+
+            <!-- Questions for Topic 6 -->
+            <div class="qa-section">
+                <div class="qa-label">Questions & Answers</div>
+                <div class="question-item">
+                    <button class="q-btn">Q20: What happens when sugar is heated?</button>
+                    <div class="a-panel"><div class="a-content">It turns black (Carbon) and releases water. Shows sugar is a compound of C, H, O.</div></div>
+                </div>
+                <div class="question-item">
+                    <button class="q-btn">Q21/Q7 (Ex): Iron and Sulfur reaction?</button>
+                    <div class="a-panel"><div class="a-content">Mixture: Iron is magnetic. Compound (Iron Sulfide): Non-magnetic, uniform, produces H₂S gas with acid.</div></div>
+                </div>
+                <div class="question-item">
+                    <button class="q-btn">Q8 (Exercise): Can a substance be both element and compound?</button>
+                    <div class="a-panel"><div class="a-content">No. Element = 1 type of atom. Compound = 2+ types combined. Definitions are mutually exclusive.</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOPIC 7: MINERALS, ART & USES -->
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">7. Minerals, Art & Environment</div>
+            <div class="toggle-icon">▼</div>
+        </div>
+        <div class="topic-content">
+            <h3>Minerals</h3>
+            <p>Natural solid substances in rocks. Mostly compounds (Quartz, Calcite), rarely pure elements (Gold, Sulfur). Cement, Talc are made from minerals.</p>
+
+            <h3>Dhokra Art</h3>
+            <p>Uses <strong>Beeswax</strong> and Alloys like <strong>Brass or Bronze</strong> (mixtures) to create figures. Traditional craft from Bihar/Odisha.</p>
+
+            <h3>Environment</h3>
+            <p><strong>Graphene Aerogel:</strong> A new wonder material (elemental carbon) that is ultra-light and absorbs oil/CO₂, helping clean the environment.</p>
+
+            <!-- Questions for Topic 7 -->
+            <div class="qa-section">
+                <div class="qa-label">Questions & Answers</div>
+                <div class="question-item">
+                    <button class="q-btn">Q23: What are minerals?</button>
+                    <div class="a-panel"><div class="a-content">Natural solids with fixed composition in rocks. Mostly compounds, sometimes elements.</div></div>
+                </div>
+                <div class="question-item">
+                    <button class="q-btn">Q24: How are elements/mixtures used in Dhokra art?</button>
+                    <div class="a-panel"><div class="a-content">Uses alloys (mixtures) like brass/bronze and beeswax for casting figures.</div></div>
+                </div>
+                <div class="question-item">
+                    <button class="q-btn">Q26: How can compounds help environment?</button>
+                    <div class="a-panel"><div class="a-content">Compounds like Graphene Aerogel absorb CO₂/oil, reducing pollution and climate change.</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOPIC 8: EXERCISE BANK (ALL REMAINING QUESTIONS) -->
+    <div class="topic-card">
+        <div class="topic-header" onclick="toggleTopic(this)">
+            <div class="topic-title">8. Complete Exercise Question Bank</div>
+            <div class="toggle-icon">▼</div>
+        </div>
+        <div class="topic-content">
+            <p><em>Comprehensive list of all textbook exercises not covered above.</em></p>
+            
+            <div class="qa-section">
+                <div class="question-item">
+                    <button class="q-btn">MCQ 1: A + B → C (A, B cannot be broken). Which is correct?</button>
+                    <div class="a-panel"><div class="a-content"><strong>Answer: (iv)</strong> A and B are elements, C is a compound with fixed composition. Since A/B cannot be broken, they are elements.</div></div>
+                </div>
+
+                <div class="question-item">
+                    <button class="q-btn">MCQ 2: Assertion: Air is a mixture. Reason: Formed without chemical change.</button>
+                    <div class="a-panel"><div class="a-content"><strong>Answer: (i)</strong> Both True and Reason explains Assertion.</div></div>
+                </div>
+
+                <div class="question-item">
+                    <button class="q-btn">Q3 (Ex): Water properties vs H/O properties.</button>
+                    <div class="a-panel"><div class="a-content">Water extinguishes fire, while Hydrogen burns and Oxygen supports burning. This proves Water is a compound with new properties.</div></div>
+                </div>
+
+                <div class="question-item">
+                    <button class="q-btn">Q4 (Ex): Which set is correctly matched?</button>
+                    <div class="a-panel"><div class="a-content"><strong>Answer: (iii) Pure substances</strong> – carbon dioxide, iron, oxygen, sugar. All are elements or compounds.</div></div>
+                </div>
+
+                <div class="question-item">
+                    <button class="q-btn">Q5 (Ex): Classify: Iron + Moist Air → Iron Oxide.</button>
+                    <div class="a-panel"><div class="a-content">Iron (Element), Moist Air (Mixture), Iron Oxide (Compound).</div></div>
+                </div>
+
+                <div class="question-item">
+                    <button class="q-btn">Q6 (Ex): Table 8.3 Classification</button>
+                    <div class="a-panel"><div class="a-content">
+                        <strong>Elements:</strong> Al, Gold, O₂, N₂, S, H.<br>
+                        <strong>Compounds:</strong> CO₂, MgO, Rust, FeS, Glucose, Water, NaCl, Baking Soda.<br>
+                        <strong>Mixtures:</strong> Sand, Seawater, Muddy Water, Air, Fruit Juice.
+                    </div></div>
+                </div>
+
+                <div class="question-item">
+                    <button class="q-btn">Q10 (Ex): Identify Gas A in Iron + HCl reaction.</button>
+                    <div class="a-panel"><div class="a-content">Gas A is <strong>Hydrogen</strong>. Equation: Fe + 2HCl → FeCl₂ + H₂.</div></div>
+                </div>
+
+                <div class="question-item">
+                    <button class="q-btn">Q11 (Ex): Two compounds from non-metals & uses.</button>
+                    <div class="a-panel"><div class="a-content">1. CO₂ (Fire extinguishers). 2. SO₂ (Preservative).</div></div>
+                </div>
+
+                <div class="question-item">
+                    <button class="q-btn">Q12 (Ex): Gold: Mineral and Metal?</button>
+                    <div class="a-panel"><div class="a-content">Mineral: Found naturally in crust. Metal: Malleable, ductile, lustrous properties.</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <p>&copy; Interactive Science Study Guide.</p>
+</footer>
+
+<script>
+    // --- TOPIC EXPANSION LOGIC ---
+    function toggleTopic(header) {
+        const card = header.parentElement;
+        const content = header.nextElementSibling;
+        
+        // Close all others (Accordion style) - Optional, remove loop if you want multiple open
+        const allCards = document.querySelectorAll('.topic-card');
+        allCards.forEach(c => {
+            if (c !== card && c.classList.contains('active')) {
+                c.classList.remove('active');
+                c.querySelector('.topic-content').style.maxHeight = null;
+            }
+        });
+
+        card.classList.toggle("active");
+        if (content.style.maxHeight) {
+            content.style.maxHeight = null;
+        } else {
+            content.style.maxHeight = content.scrollHeight + 500 + "px"; // Extra buffer for dynamic content
+        }
+    }
+
+    // --- Q&A LOGIC ---
+    const qs = document.getElementsByClassName("q-btn");
+    for (let i = 0; i < qs.length; i++) {
+        qs[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            const panel = this.nextElementSibling;
+            if (panel.style.maxHeight) {
+                panel.style.maxHeight = null;
+            } else {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+                // Update parent height if needed
+                let parentContent = this.closest('.topic-content');
+                parentContent.style.maxHeight = parentContent.scrollHeight + panel.scrollHeight + "px";
+            }
+        });
+    }
+
+    // --- SIMULATION 1: MATTER CHECK ---
+    function checkMatter(item, isMatter) {
+        const fb = document.getElementById('matter-feedback');
+        if(isMatter) {
+            fb.innerHTML = `✅ ${item} is Matter! It has mass.`;
+            fb.style.color = "green";
+        } else {
+            fb.innerHTML = `❌ ${item} is NOT Matter. No mass/space.`;
+            fb.style.color = "red";
+        }
+    }
+
+    // --- SIMULATION 2: LIME WATER ---
+    function turnMilky() {
+        const lime = document.getElementById('lime-water');
+        const res = document.getElementById('lime-result');
+        lime.innerHTML = "Wait...";
+        setTimeout(() => {
+            lime.style.background = "#fff"; // Milky white
+            lime.innerHTML = "Milky!";
+            res.innerHTML = "<strong>Confirmed!</strong> CO₂ in air turned it milky.";
+        }, 1500);
+    }
+
+    // --- SIMULATION 3: ELECTROLYSIS ---
+    function startElectrolysis() {
+        const h = document.getElementById('bubbles-h');
+        const o = document.getElementById('bubbles-o');
+        const res = document.getElementById('electro-result');
+        
+        // Bubbling animation
+        h.style.animation = "rise 0.5s infinite linear";
+        o.style.animation = "rise 1s infinite linear"; // Oxygen slower/less
+        h.style.opacity = 1;
+        o.style.opacity = 1;
+
+        setTimeout(() => {
+            res.style.display = 'block';
+            // Resize topic height to fit result
+            let p = res.closest('.topic-content');
+            p.style.maxHeight = p.scrollHeight + "px";
+        }, 2000);
+    }
+
+    // --- SIMULATION 4: MAGNET TEST ---
+    let currentSimState = 'mixture';
+    
+    function setSim(state) {
+        currentSimState = state;
+        const box = document.getElementById('particle-box');
+        const res = document.getElementById('mag-res');
+        box.innerHTML = '';
+        res.innerHTML = '';
+
+        for(let i=0; i<20; i++) {
+            // Iron (Black)
+            let fe = document.createElement('div');
+            fe.className = 'dot';
+            fe.style.background = '#2c3e50';
+            fe.dataset.type = 'fe';
+            
+            // Sulfur (Yellow)
+            let s = document.createElement('div');
+            s.className = 'dot';
+            s.style.background = '#f1c40f';
+            s.dataset.type = 's';
+
+            if (state === 'mixture') {
+                fe.style.left = Math.random() * 90 + '%';
+                fe.style.top = Math.random() * 90 + '%';
+                s.style.left = Math.random() * 90 + '%';
+                s.style.top = Math.random() * 90 + '%';
+            } else {
+                // Compound: Stick together
+                let top = Math.random() * 90;
+                let left = Math.random() * 90;
+                fe.style.background = '#444'; // FeS Color
+                s.style.background = '#444'; 
+                fe.style.top = top + '%'; fe.style.left = left + '%';
+                s.style.top = (top + 2) + '%'; s.style.left = (left + 2) + '%';
+            }
+            
+            box.appendChild(fe);
+            box.appendChild(s);
+        }
+    }
+
+    function runMagnet() {
+        const res = document.getElementById('mag-res');
+        const dots = document.querySelectorAll('.dot');
+        
+        if (currentSimState === 'mixture') {
+            dots.forEach(d => {
+                if(d.dataset.type === 'fe') {
+                    d.style.top = '10%';
+                    d.style.left = '90%'; // Move to "Magnet"
+                }
+            });
+            res.innerHTML = "Magnet separates Iron from the mixture!";
+            res.style.color = "green";
+        } else {
+            res.innerHTML = "No effect! Elements are chemically bonded (Compound).";
+            res.style.color = "red";
+        }
+    }
+
+    // Initialize Sim 4
+    setSim('mixture');
+
+</script>
+
+</body>
+</html>
